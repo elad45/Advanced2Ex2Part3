@@ -110,8 +110,8 @@ namespace NoDBPART3.Controllers
                 return NotFound();
             }
 
-            conversationService.GetMessages(id);
-            return StatusCode(204);
+            List<Message> messages = conversationService.GetMessages(id);
+            return Ok(messages);
         }
     }
 }
