@@ -21,6 +21,7 @@
         {
             var conversationService = new ConversationService();
             var allConvs = conversationService.GetAll();
+            Contact contact;
             foreach (var conversation in allConvs)
             {
                 foreach (var userId in conversation.UsersList)
@@ -28,14 +29,18 @@
                     var user = users.Find(x=> x.Id == userId);
                     var secondUserId = conversation.UsersList.Find(x => x != userId);
                     var secondUser = users.Find(x => x.Id == secondUserId);
-                    var contact = new Contact(secondUser.Id, secondUser.Name, "http://localhost:7270");
+                     contact = new Contact(secondUser.Id, secondUser.Name, "http://localhost:7270");
                     if (!user.ContactsList.Any(contact => contact.Id == secondUser.Id))
                         user.AddContact(contact);
-
+                    contact.Last = conversation.MessagesList.Last().Content;
+                    contact.Lastdate = DateTime.Now;
                     contact = new Contact(user.Id, user.Name, "http://localhost:7260");
                     if (!secondUser.ContactsList.Any(contact => contact.Id == user.Id))
                         secondUser.AddContact(contact);
+                    // possibly not needed because of line 32
+                    contact.Last = conversation.MessagesList.Last().Content;
                 }
+                
             }
         }
 

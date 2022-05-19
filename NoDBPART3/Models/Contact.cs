@@ -9,6 +9,7 @@
             //ContactId = contactId;
             Name = name;
             Server = server;
+            // last message in the conversation with that certain contact
             Last = null;
             Lastdate = null;
         }

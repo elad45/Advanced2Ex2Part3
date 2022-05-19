@@ -20,5 +20,13 @@
         public DateTime Created { get; set; }
 
         public bool Sent { get; set; }
+
+        /*
+        public static int nextMsgId()
+        {
+            int i = 5;
+            return i++;
+        }
+        */
     }
 }
