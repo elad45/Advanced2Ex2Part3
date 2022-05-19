@@ -49,7 +49,7 @@
             return conv.MessagesList;
         }    
         
-        public Message GetMessageById(string user1,string MsgId)
+        public Message GetMsgById(string user1,string MsgId)
         {
             List<Message> messages = GetMessages(user1);
   
@@ -58,17 +58,36 @@
                 return null;
             return msg;
         }
-
-        public void AddMessage(string user1,Message msg)
+        
+        public void DeleteMsgById(string user1,string MsgId)
         {
+            List<Message> messages = GetMessages(user1);
+            Message message = messages.Find(msg => msg.Id.ToString() == MsgId);
+            messages.Remove(message);
+        }
+
+        public void AddMessage(string user1,string content)
+        {
+            int newMsgId;
             var user2 = UserDataService.loggedUser;
             var conv = conversations.FirstOrDefault(x => x.UsersList.Contains(user1) &&
                                                          x.UsersList.Contains(user2));
             if (conv == null)
                 return;
-            conv.MessagesList.Add(msg);
+            if (conv.MessagesList.Count != 0)
+            {
+                newMsgId = conv.MessagesList.Max(msg => msg.Id) + 1;
+                //newMsgId = 1;
+            }
+            else
+            {
+                //newMsgId = conv.MessagesList.Max(msg => msg.Id) + 1;
+                newMsgId = 1;
+            }
+            Message newMsg = new Message(newMsgId, "notimportant", content, true);
+            conv.MessagesList.Add(newMsg);
         }
-        public int nextId ()
+        public int nextConvId ()
         {
             return (conversations.Max (x => x.Id)+1);
         }
