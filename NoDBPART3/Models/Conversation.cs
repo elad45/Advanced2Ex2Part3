@@ -1,9 +1,14 @@
 ﻿namespace NoDBPART3.Models
 {
     public class Conversation
-    {
+    {/*
+        public Conversation(string user1,string user2)
+        {
+            UsersList = new List<string> { user1, user2 };
+            MessagesList = new List<Message>();
 
-
+        }
+        */
         //List of 2 two users
         public List<string> UsersList { get; set; }
 

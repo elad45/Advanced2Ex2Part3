@@ -39,6 +39,13 @@
             return conversations.Find(x => x.Id == id);
         }
 
+
+        public Conversation GetConv(string user1,string user2)
+        {
+            return conversations.FirstOrDefault(x => x.UsersList.Contains(user1) &&
+                                                         x.UsersList.Contains(user2));
+        }
+
         public List<Message> GetMessages(string user1)
         {
             var user2 = UserDataService.loggedUser;

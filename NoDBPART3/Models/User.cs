@@ -2,11 +2,11 @@
 {
     public class User
     {
-        public User(/*string id, string name, string password*/)
+        public User(string id, string name, string password)
         {
-         //   Id = id;
-          //  Name = name;
-           // Password = password;
+            Id = id;
+            Name = name;
+            Password = password;
             ContactsList = new List<Contact>();
         }
 

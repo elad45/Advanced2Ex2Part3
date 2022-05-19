@@ -6,10 +6,14 @@
 
         private static List<User> users = new List<User>()
         {
+            new User("bob","Bobby","123"),
+            new User("alice","Alicia","1234"),
+            new User("bob2","Bobby3","12345")
+            /*
             new User() {Id = "bob", Name="Bobby", Password= "123" },
             new User() {Id = "alice", Name="Alicia", Password= "1234" },
             new User(){Id = "bob2", Name="Bobby3", Password= "1235" }
-            
+            */
         };
 
         //adds to both users the contact

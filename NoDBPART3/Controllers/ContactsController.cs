@@ -96,6 +96,7 @@ namespace NoDBPART3.Controllers
             return StatusCode(204);
         }
 
+        //Messages return by id
         [HttpGet("{id}/messages")]
         public IActionResult GetMessages(string id)
         {
@@ -113,6 +114,26 @@ namespace NoDBPART3.Controllers
             List<Message> messages = conversationService.GetMessages(id);
             return Ok(messages);
         }
+        /*
+        [HttpPost("{id}/messages")]
+        public IActionResult AddMessage (string id, [FromBody]AddMessage content)
+        {
+            User user = service.Get(UserDataService.loggedUser);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            Contact c = user.ContactsList.Find(x => x.Id == id);
+            if (c == null)
+            {
+                return NotFound();
+            }
+
+            List<Message> messages = conversationService.GetMessages(id);
+            messages.Add(new Message())
+
+        }
+        */
     }
 }
 
