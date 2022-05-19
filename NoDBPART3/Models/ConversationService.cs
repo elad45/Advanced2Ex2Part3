@@ -4,11 +4,11 @@
     {
         private static List<Conversation> conversations = new List<Conversation>()
         {
-            new Conversation() {Id = 200, UsersList=new List<string> { "bob2","alice"},
+            new Conversation() {Id = 1, UsersList=new List<string> { "bob2","alice"},
                 MessagesList= new List<Message> {new Message (201,"bob2","Hello Alice!",false),
                                                  new Message (202,"alice","Hello Bob2!",true) } },
 
-            new Conversation() {Id = 201, UsersList=new List<string> { "bob2","bob"},
+            new Conversation() {Id = 2, UsersList=new List<string> { "bob2","bob"},
                 MessagesList= new List<Message> {new Message (201,"bob2","Hello Bob!",false),
                                                  new Message (202,"bob","Hello Bob2!",true) }}
         };

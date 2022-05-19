@@ -2,7 +2,14 @@
 {
     public class Conversation
     {
+        public Conversation() { }
+        public Conversation(int id,string user1, string user2)
+        {
+            Id = id;
+            UsersList = new List<string> { user1, user2 };
+            MessagesList = new List<Message>();
 
+        }
 
         //List of 2 two users
         public List<string> UsersList { get; set; }
