@@ -14,5 +14,12 @@
 
         public List<Message> GetMessages(string user1);
 
+
+        public Message GetMsgById(string user1, string MsgId);
+
+        public void DeleteMsgById(string user1, string MsgId);
+
+        public int nextConvId();
+        public void AddMessage(string id, string content);
     }
 }
