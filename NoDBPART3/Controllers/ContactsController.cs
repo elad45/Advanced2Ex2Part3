@@ -52,9 +52,9 @@ namespace NoDBPART3.Controllers
             }
             Contact c = new Contact(request.Id, request.Name, request.Server);
             user.AddContact(c);
-            //trying to add constructor
-            //Conversation conv = new Conversation(conversationService.NextId(),request.Id);
-            //conversationService.Add(conv);
+            //trying to add conv
+            Conversation conv = new Conversation(conversationService.nextId(),request.Id,UserDataService.loggedUser);
+            conversationService.Add(conv);
             //
             return StatusCode(201);
         }

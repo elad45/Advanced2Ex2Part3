@@ -48,22 +48,11 @@
                 return null;
             return conv.MessagesList;
         }    
-        /*
-            foreach(var conversation in conversations)
-            {
-                int i = 0;
-                foreach (var checkedId in conversation.UsersList)
-                {
-                    if ((checkedId == contactId) || (checkedId == loggedId))
-                        i++;
-                }
-                if (i == 2)
-                {
-                    return conversation.MessagesList;
-                }
-            }
-            return null;
-            */
+        
+        public int nextId ()
+        {
+            return (conversations.Max (x => x.Id)+1);
+        }
         
     }
 }

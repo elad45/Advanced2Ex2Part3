@@ -14,5 +14,7 @@
 
         public List<Message> GetMessages(string user1);
 
+        public int nextId();
+
     }
 }
