@@ -130,6 +130,8 @@ namespace NoDBPART3.Controllers
 
             //Message newMsg = new Message(5, "notimportant", msg.Content, true);
             conversationService.AddMessage(id, msg.Content);
+            c.Last = msg.Content;
+            c.Lastdate = DateTime.Now;
             return StatusCode(201);
         }
 
