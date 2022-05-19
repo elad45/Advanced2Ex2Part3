@@ -52,7 +52,7 @@ namespace NoDBPART3.Controllers
             }
             Contact c = new Contact(request.Id, request.Name, request.Server);
             user.AddContact(c);
-            //trying to add conv
+            //trying to add conv ------ have to be tested ----
             Conversation conv = new Conversation(conversationService.nextId(),request.Id,UserDataService.loggedUser);
             conversationService.Add(conv);
             //
@@ -113,6 +113,62 @@ namespace NoDBPART3.Controllers
             List<Message> messages = conversationService.GetMessages(id);
             return Ok(messages);
         }
-    }
+
+        [HttpPost("{id}/messages")]
+        public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
+        {
+            User user = service.Get(UserDataService.loggedUser);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            Contact c = user.ContactsList.Find(x => x.Id == id);
+            if (c == null)
+            {
+                return NotFound();
+            }
+
+            Message newMsg = new Message(5, "notimportant", msg.Content, true);
+            conversationService.AddMessage(id, newMsg);
+            return StatusCode(201);
+        }
+
+        [HttpGet("{id}/messages/{id2}")]
+        //check if works
+        public IActionResult GetMsgById(string id,string id2)
+        {
+            User user = service.Get(UserDataService.loggedUser);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            Contact c = user.ContactsList.Find(x => x.Id == id);
+            if (c == null)
+            {
+                return NotFound();
+            }
+            //List<Message> messages = conversationService.GetMessages(id);
+            Message msg = conversationService.GetMessageById(id,id2);
+            if (msg==null)
+                return NotFound();
+            return Ok(msg);
+        }
+
+        [HttpPut("{id}/messages/{id2}")]
+        public IActionResult PutMsgById(string id, string id2,[FromBody] PutMsgById msg)
+        {
+            User user = service.Get(UserDataService.loggedUser);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            Contact c = user.ContactsList.Find(x => x.Id == id);
+            if (c == null)
+            {
+                return NotFound();
+            }
+
+
+        }
 }
 

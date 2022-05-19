@@ -14,6 +14,10 @@
 
         public List<Message> GetMessages(string user1);
 
+        public void AddMessage(string user1, Message msg);
+
+        public Message GetMessageById(string user1, string MsgId);
+
         public int nextId();
 
     }
