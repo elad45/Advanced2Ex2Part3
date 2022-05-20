@@ -14,6 +14,9 @@ namespace NoDBPART3.Controllers
         {
             UserDataService userService = new UserDataService();
             User currentUser = userService.Get(newUser.Id);
+            
+            
+            
             //id already exists
             if (currentUser != null)
                 return StatusCode(404);

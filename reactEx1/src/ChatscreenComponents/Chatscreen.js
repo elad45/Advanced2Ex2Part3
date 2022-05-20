@@ -8,13 +8,28 @@ import CurrentChat from './CurrentChat';
 import Message from '../Message';
 import AudioMsg from '../AudioMsg';
 
-function Chatscreen(props) {
-    var loggedPersonUsername = localStorage.getItem("currentUser")
-    var loggingUser = usersList.find(x => x.username == loggedPersonUsername)
-//    if (localStorage.getItem(loggingUser.username)) {
+async function Chatscreen(props) {
+    var loggedPersonUsername = localStorage.getItem("currentUser")  
+    var loggingUser="alice"
+    //delete from ex2
+    //var loggingUser = usersList.find(x => x.username == loggedPersonUsername)
+
+
+    //    if (localStorage.getItem(loggingUser.username)) {
 //        loggingUser.avatar = localStorage.getItem(loggingUser.username)
 //    }
     // will be updated every time we add a friend to the current user
+    console.log(loggedPersonUsername) //
+    var loggedUserFriends = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername)
+    loggedUserFriends = await loggedUserFriends.json();
+    //doesn't work
+    var friends = []
+    for(var i in loggedUserFriends) {
+        friends.push(i[0])
+    }
+    console.log(loggedUserFriends) //
+    /////////////////////////////
+
     const [friends, setFriends] = useState(loggingUser.friends);
     // will be updated every time we click on a contact Card
     const [friendChat, setFriendChat] = useState("")

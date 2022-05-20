@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NoDBPART3.Models;
 using NoDBPART3.Models.Request;
+using System.Web;
 
 // return Ok(WHatever) - means status code 200
 // return StatusCode(201,WHATEVER I WANT TO RETURN)
@@ -22,7 +23,9 @@ namespace NoDBPART3.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            User u = service.Get(UserDataService.loggedUser);
+            string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
+            User u = service.Get(xyz);
+            //User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
             return Ok(u.ContactsList);
@@ -32,6 +35,7 @@ namespace NoDBPART3.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
+          
             //has to be changed somehow to the user who sent the request
             User u = service.Get(UserDataService.loggedUser);
             if (u == null)
