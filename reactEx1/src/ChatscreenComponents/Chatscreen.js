@@ -6,14 +6,29 @@ import AddFriend from './AddFriend';
 import usersList from '../usersDB';
 import CurrentChat from './CurrentChat';
 import Message from '../Message';
-import AudioMsg from '../AudioMsg';
 
 //loggingUser is the User object who is logged
 
 function Chatscreen(props) {
     var loggedPersonUsername = localStorage.getItem("currentUser")
     var loggingUser = usersList.find(x => x.username == loggedPersonUsername)
-
+    ////////////////////////////////////////////////////////////////////////////
+    //this is the user nickname
+    const [loggingUserNickname,setUserNickname]  = useState("");
+    
+    const fetchNickname = async() => {
+        const response = await fetch('http://localhost:5094/api/Users?user='+loggedPersonUsername,{
+            method:'get',
+            headers: {
+                'Content-Type' : 'application/json'},
+        })
+        var loggedPersonNickname = await response.text();
+        setUserNickname(loggedPersonNickname)
+    }
+    useEffect(() =>{
+        fetchNickname();
+    },[]);
+    
     // will be updated every time we add a friend to the current user. this is the loggeduser contacts
     //const [friends, setFriends] = useState(loggingUser.friends);
     // const [friends, setFriends] = useState(friendContacts);
@@ -30,19 +45,16 @@ function Chatscreen(props) {
                 'Content-Type' : 'application/json'},
         })
         const data = await response.json();
-        console.log(data.length);
         
         for (var i=0; i< data.length; i++) {
             friendContacts.push(data[i].name)
         }
-        console.log(friendContacts.length)
         setFriends(friendContacts);
     }
-
+    
     //now friends contains all the contactId
     useEffect(() =>{
         fetchContacts();
-        console.log(5);
     },[]);
     
     ////////////////////////////////////////////
@@ -61,11 +73,11 @@ function Chatscreen(props) {
         var time = new Date().getTime()
         var newMessage = new Message(newMessageText, time, "text", loggingUser.nickname, friendChat.nickname)
         if(loggingUser.nickname>=friendChat.nickname){
-            loggingUser.lastMessages.set(loggingUser.nickname + friendChat.nickname, newMessageText + "*" + time)
-            friendChat.lastMessages.set(loggingUser.nickname + friendChat.nickname, newMessageText + "*" + time)
+            loggingUser.lastMessages.set(loggingUserNickname + friendChat.nickname, newMessageText + "*" + time)
+            friendChat.lastMessages.set(loggingUserNickname + friendChat.nickname, newMessageText + "*" + time)
         } else {
-            loggingUser.lastMessages.set(friendChat.nickname + loggingUser.nickname, newMessageText + "*" + time)
-            friendChat.lastMessages.set(friendChat.nickname + loggingUser.nickname, newMessageText + "*" + time)
+            loggingUser.lastMessages.set(friendChat.nickname + loggingUserNickname, newMessageText + "*" + time)
+            friendChat.lastMessages.set(friendChat.nickname + loggingUserNickname, newMessageText + "*" + time)
         }
         loggingUser.chats.push(newMessage)
         // temporary line, thats the work of the server
@@ -93,7 +105,7 @@ function Chatscreen(props) {
                     <div className="chat-header" id="profileAndButton">
                         <div id="myProfile">
                         <div><img id="myAvatar" src={loggingUser.avatar} /></div>
-                        <div><span id="myNickname">{loggingUser.nickname}</span></div>
+                        <div><span id="myNickname">{loggingUserNickname}</span></div>
                         </div>
                         <AddFriend loggingUser={loggingUser} setFriends={setFriends} />
                     </div>
