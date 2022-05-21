@@ -19,7 +19,7 @@
 
 //        public string ContactId { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; }    
 
         public string Server { get; set; }
 

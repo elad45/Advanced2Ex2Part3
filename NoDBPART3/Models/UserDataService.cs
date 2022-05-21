@@ -6,9 +6,9 @@
 
         private static List<User> users = new List<User>()
         {
-            new User("bob","Bobby","123"),
-            new User("alice","Alicia","1234"),
-            new User("bob2","Bobby3","12345")
+            new User("bob","BobbyS","123"),
+            new User("alice","AliciaS","1234"),
+            new User("bob2","Bobby3S","12345")
             /*
             new User() {Id = "bob", Name="Bobby", Password= "123" },
             new User() {Id = "alice", Name="Alicia", Password= "1234" },
