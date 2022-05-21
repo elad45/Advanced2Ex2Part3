@@ -8,6 +8,8 @@ import CurrentChat from './CurrentChat';
 import Message from '../Message';
 import AudioMsg from '../AudioMsg';
 
+//loggingUser is the User object who is logged
+
 function Chatscreen(props) {
     var loggedPersonUsername = localStorage.getItem("currentUser")
     var loggingUser = usersList.find(x => x.username == loggedPersonUsername)
