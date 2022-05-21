@@ -35,8 +35,8 @@ function Chatscreen(props) {
     // console.log(friends)
     
     ////////////////////////////////////////////
-    var friendContacts=[];
-    const [friends, setFriends] = useState([]);
+    var friendContacts = new Map();
+    const [friends, setFriends] = useState(friendContacts);
 
     const fetchContacts = async () => {
         const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
@@ -47,7 +47,7 @@ function Chatscreen(props) {
         const data = await response.json();
         
         for (var i=0; i< data.length; i++) {
-            friendContacts.push(data[i].name)
+            friendContacts.set(data[i].id , data[i].name);
         }
         setFriends(friendContacts);
     }
@@ -58,7 +58,32 @@ function Chatscreen(props) {
     },[]);
     
     ////////////////////////////////////////////
+    //All nicknames in database
+
+    const [AllUsernames,setUsernames]  = useState("");
     
+    const fetchAllUsernames = async() => {
+        const response = await fetch('http://localhost:5094/api/Users/GetAllUsernames',{
+            method:'get',
+            headers: {
+                'Content-Type' : 'application/json'},
+        })
+        var allUsernames = await response.json();
+        setUsernames(allUsernames)
+    }
+    useEffect(() =>{
+        fetchAllUsernames();
+        //console.log(AllUsersNicknames);
+    },[]);
+
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////
     // will be updated every time we click on a contact Card
     const [friendChat, setFriendChat] = useState("")
 
@@ -107,9 +132,9 @@ function Chatscreen(props) {
                         <div><img id="myAvatar" src={loggingUser.avatar} /></div>
                         <div><span id="myNickname">{loggingUserNickname}</span></div>
                         </div>
-                        <AddFriend loggingUserNickname = {loggingUserNickname} userContacts = {friends} setFriends={setFriends} />
+                        <AddFriend loggedPersonUsername = {loggedPersonUsername} userContactsMap = {friends} AllUsernames={AllUsernames} setFriends={setFriends} />
                     </div>
-                    <ContactCard loggingUser={loggingUser} userFriends={friends} setFriendChat={setFriendChat} />
+                    <ContactCard loggingUser={loggingUser} userFriends={friends} AllUsernames= {AllUsernames} setFriendChat={setFriendChat} />
                 </div>
                 <div className="chat" id="rightSide">
                     <div className="chat-header" id="chat-header" >

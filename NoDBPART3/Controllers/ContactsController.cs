@@ -126,7 +126,7 @@ namespace NoDBPART3.Controllers
         public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
         {
             //User user = service.Get(msg.UserId);
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(msg.UserId);
             if (user == null)
             {
                 return NotFound();
@@ -138,7 +138,7 @@ namespace NoDBPART3.Controllers
             }
 
             //Message newMsg = new Message(5, "notimportant", msg.Content, true);
-            conversationService.AddMessage(id, msg.Content);
+            conversationService.AddMessage(msg.UserId,id, msg.Content);
             c.Last = msg.Content;
             c.Lastdate = DateTime.Now;
             return StatusCode(201);

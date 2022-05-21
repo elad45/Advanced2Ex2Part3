@@ -69,12 +69,11 @@
             messages.Remove(message);
         }
 
-        public void AddMessage(string user1,string content)
+        public void AddMessage(string user,string contact, string content)
         {
             int newMsgId;
-            var user2 = UserDataService.loggedUser;
-            var conv = conversations.FirstOrDefault(x => x.UsersList.Contains(user1) &&
-                                                         x.UsersList.Contains(user2));
+            var conv = conversations.FirstOrDefault(x => x.UsersList.Contains(user) &&
+                                                         x.UsersList.Contains(contact));
             if (conv == null)
                 return;
             if (conv.MessagesList.Count != 0)
@@ -85,9 +84,8 @@
             {
                 newMsgId = 1;
             }
-            Message newMsg = new Message(newMsgId, "notimportant", content, true);
+            Message newMsg = new Message(newMsgId, "notimportant", content,true);
             conv.MessagesList.Add(newMsg);
-            
         }
         public int nextConvId ()
         {

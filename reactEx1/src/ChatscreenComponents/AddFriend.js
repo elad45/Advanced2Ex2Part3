@@ -9,46 +9,55 @@ import './AddFriend.css'
 //using setFriends
 function AddFriend(props) {
     
-    const [AllUsersNicknames,setUsersNicknames]  = useState("");
+    // const [AllUsersNicknames,setUsersNicknames]  = useState("");
     
-    const fetchAllNicknames = async() => {
-        const response = await fetch('http://localhost:5094/api/Users/GetAllUsers',{
-            method:'get',
-            headers: {
-                'Content-Type' : 'application/json'},
-        })
-        var allNickNames = await response.json();
-        setUsersNicknames(allNickNames)
-    }
-    useEffect(() =>{
-        fetchAllNicknames();
-        console.log(AllUsersNicknames);
-    },[]);
+    // const fetchAllNicknames = async() => {
+    //     const response = await fetch('http://localhost:5094/api/Users/GetAllUsers',{
+    //         method:'get',
+    //         headers: {
+    //             'Content-Type' : 'application/json'},
+    //     })
+    //     var allNickNames = await response.json();
+    //     setUsersNicknames(allNickNames)
+    // }
+    // useEffect(() =>{
+    //     fetchAllNicknames();
+    //     console.log(AllUsersNicknames);
+    // },[]);
     
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleAdd = () => {
+        let friendID =document.getElementById("friendID").value
         let friendNick = document.getElementById("friendNick").value
-        let friendUser = AllUsersNicknames.find(x => x == friendNick)
-        console.log(friendUser)
+        let friendUser = props.AllUsernames.find(x => x == friendID)
+        
         if (friendUser) {
             //User can't add himself as a contact
-            if (props.loggingUserNickname==friendNick) {
+            if (props.loggingUsername==friendID) {
                 alert("User can't add himself as a contact");
                 return;
             }
             //User can't add a friend that already in his contact list
-            if (props.userContacts.find(x=>x == friendNick)) {
-                alert("Friend already in contacts list");
-                return;
+            // if (props.userContactsMap.value(x => x == friendID)) {
+            //     alert("Friend already in contacts list");
+            //     return;
+            // }
+            
+            for (const [key, value] of props.userContactsMap) {
+                console.log(key)
+                if (key == friendID) {
+                    alert("Friend already in contacts list");
+                    return;  
+              }
             }
             props.setFriends((currentFriends) => {
                 let newFriends = [...currentFriends];
-                props.userContacts.push(friendNick)
+                props.userContactsMap.push(friendNick)
                 newFriends.push(friendNick)
                 handleClose();
-                console.log(props.userContacts);
+                console.log(props.userContactsMap);
                 return newFriends;
             })
         }
@@ -66,7 +75,8 @@ function AddFriend(props) {
                     <Modal.Title>Add friend to chat</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <input placeholder="Enter friend's name" id="friendNick"></input>
+                    <input placeholder = "Enter friend username" id = "friendID"></input>
+                    <input placeholder = "Enter friend nickname" id="friendNick"></input>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
