@@ -4,6 +4,9 @@ import React from 'react'
 import usersList from '../usersDB';
 import './AddFriend.css'
 
+//using logging.user.nickname
+//logginguser.friends
+//using setFriends
 function AddFriend(props) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -14,18 +17,18 @@ function AddFriend(props) {
 
         if (friendUser) {
             //User can't add himself as a contact
-            if (props.loggingUser.nickname==friendNick) {
+            if (props.loggingUserNickname==friendNick) {
                 alert("User can't add himself as a contact");
                 return;
             }
             //User can't add a friend that already in his contact list
-            if (props.loggingUser.friends.find(x=>x == friendNick)) {
+            if (props.userContacts.find(x=>x == friendNick)) {
                 alert("Friend already in contacts list");
                 return;
             }
             props.setFriends((currentFriends) => {
                 let newFriends = [...currentFriends];
-                props.loggingUser.friends.push(friendNick)
+                props.userContacts.push(friendNick)
                 newFriends.push(friendNick)
                 handleClose();
                 return newFriends;

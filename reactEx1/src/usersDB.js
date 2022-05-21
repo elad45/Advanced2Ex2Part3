@@ -133,14 +133,14 @@ var usersList = [
     {
        username: 'bob2',
        password: '12345',
-       nickname: 'Bobby3',
+       nickname: 'Bobby2',
        avatar: "https://bootdey.com/img/Content/avatar/avatar6.png",
        friends: ["Alicia","Bobby"],    
        chats: [],
        lastMessages: new Map(),
     },
     {
-       username: 'alicia',
+       username: 'alice',
        password: '1234',
        nickname: 'Alicia',
        avatar: "https://bootdey.com/img/Content/avatar/avatar6.png",
@@ -150,7 +150,7 @@ var usersList = [
     },
     {
        username: 'bob',
-       password: '1234',
+       password: '123',
        nickname: 'Bobby',
        avatar: "https://bootdey.com/img/Content/avatar/avatar6.png",
        friends: ["Bobby3"],    

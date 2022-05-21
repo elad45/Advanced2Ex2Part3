@@ -107,7 +107,7 @@ function Chatscreen(props) {
                         <div><img id="myAvatar" src={loggingUser.avatar} /></div>
                         <div><span id="myNickname">{loggingUserNickname}</span></div>
                         </div>
-                        <AddFriend loggingUser={loggingUser} setFriends={setFriends} />
+                        <AddFriend loggingUserNickname = {loggingUserNickname} userContacts = {friends} loggingUser={loggingUser} setFriends={setFriends} />
                     </div>
                     <ContactCard loggingUser={loggingUser} userFriends={friends} setFriendChat={setFriendChat} />
                 </div>

@@ -8,7 +8,9 @@
         {
             new User("bob","Bobby","123"),
             new User("alice","Alicia","1234"),
-            new User("bob2","Bobby","12345")
+            new User("bob2","Bobby2","12345"),
+            new User("Michael","Michael12","12345"),
+            new User("Elad","Elad56","12")
             /*
             new User() {Id = "bob", Name="Bobby", Password= "123" },
             new User() {Id = "alice", Name="Alicia", Password= "1234" },
