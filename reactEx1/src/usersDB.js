@@ -129,7 +129,36 @@ var usersList = [
      friends: ["Moshe45","Michael12"],    
      chats: [],
      lastMessages: new Map(),
+    },
+    {
+       username: 'bob2',
+       password: '12345',
+       nickname: 'Bobby3',
+       avatar: "https://bootdey.com/img/Content/avatar/avatar6.png",
+       friends: ["Alicia","Bobby"],    
+       chats: [],
+       lastMessages: new Map(),
+    },
+    {
+       username: 'alicia',
+       password: '1234',
+       nickname: 'Alicia',
+       avatar: "https://bootdey.com/img/Content/avatar/avatar6.png",
+       friends: ["Bobby3"],    
+       chats: [],
+       lastMessages: new Map(),
+    },
+    {
+       username: 'bob',
+       password: '1234',
+       nickname: 'Bobby',
+       avatar: "https://bootdey.com/img/Content/avatar/avatar6.png",
+       friends: ["Bobby3"],    
+       chats: [],
+       lastMessages: new Map(),
     }
+
+
 ]
 
 export default usersList
