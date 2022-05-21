@@ -1,5 +1,5 @@
 import { Button, Modal } from 'react-bootstrap/'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react'
 import usersList from '../usersDB';
 import './AddFriend.css'
@@ -8,13 +8,30 @@ import './AddFriend.css'
 //logginguser.friends
 //using setFriends
 function AddFriend(props) {
+    
+    const [AllUsersNicknames,setUsersNicknames]  = useState("");
+    
+    const fetchAllNicknames = async() => {
+        const response = await fetch('http://localhost:5094/api/Users/GetAllUsers',{
+            method:'get',
+            headers: {
+                'Content-Type' : 'application/json'},
+        })
+        var allNickNames = await response.json();
+        setUsersNicknames(allNickNames)
+    }
+    useEffect(() =>{
+        fetchAllNicknames();
+        console.log(AllUsersNicknames);
+    },[]);
+    
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleAdd = () => {
         let friendNick = document.getElementById("friendNick").value
-        let friendUser = usersList.find(x => x.nickname == friendNick)
-
+        let friendUser = AllUsersNicknames.find(x => x == friendNick)
+        console.log(friendUser)
         if (friendUser) {
             //User can't add himself as a contact
             if (props.loggingUserNickname==friendNick) {
@@ -31,6 +48,7 @@ function AddFriend(props) {
                 props.userContacts.push(friendNick)
                 newFriends.push(friendNick)
                 handleClose();
+                console.log(props.userContacts);
                 return newFriends;
             })
         }
