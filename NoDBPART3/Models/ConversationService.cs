@@ -4,13 +4,16 @@
     {
         private static List<Conversation> conversations = new List<Conversation>()
         {
-            new Conversation() {Id = 1, UsersList=new List<string> { "bob2","alice"},
-                MessagesList= new List<Message> {new Message (1,"bob2","Hello Alice!",false),
-                                                 new Message (2,"alice","Hello Bob2!",true) } },
+            new Conversation() {Id = 1, 
+                                UsersList=new List<string> { "bob2","alice"},
+                                MessagesList= new List<Message> {
+                                                               new Message (1,"bob2","Hello Alice!",false),
+                                                               new Message (2,"alice","Hello Bob2!, it's Alice",true) } },
 
-            new Conversation() {Id = 2, UsersList=new List<string> { "bob2","bob"},
-                MessagesList= new List<Message> {new Message (3,"bob2","Hello Bob!",false),
-                                                 new Message (4,"bob","Hello Bob2!",true) }}
+            new Conversation() {Id = 2,
+                                UsersList=new List<string> { "bob2","bob"},
+                                MessagesList= new List<Message> {new Message (3,"bob2","Hello Bob!",false),
+                                                                 new Message (4,"bob","Hello Bob2! it's bob",true) }}
         };
 
         public List<Conversation> GetAll()
@@ -84,15 +87,14 @@
             if (conv.MessagesList.Count != 0)
             {
                 newMsgId = conv.MessagesList.Max(msg => msg.Id) + 1;
-                //newMsgId = 1;
             }
             else
             {
-                //newMsgId = conv.MessagesList.Max(msg => msg.Id) + 1;
                 newMsgId = 1;
             }
             Message newMsg = new Message(newMsgId, "notimportant", content, true);
             conv.MessagesList.Add(newMsg);
+            
         }
         public int nextConvId ()
         {

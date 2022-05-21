@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NoDBPART3.Models;
 using NoDBPART3.Models.Request;
+using System.Web;
 
 // return Ok(WHatever) - means status code 200
 // return StatusCode(201,WHATEVER I WANT TO RETURN)
@@ -22,7 +23,9 @@ namespace NoDBPART3.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            User u = service.Get(UserDataService.loggedUser);
+            string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
+            User u = service.Get(xyz);
+            //User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
             return Ok(u.ContactsList);
@@ -32,6 +35,8 @@ namespace NoDBPART3.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
+          
+            //has to be changed somehow to the user who sent the request
             User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
@@ -63,6 +68,7 @@ namespace NoDBPART3.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody] EditContactPut request)
         {
+            //string userId = service.Get(request.UserId);
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
             {
@@ -82,6 +88,7 @@ namespace NoDBPART3.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
+            //has to be changed to the user who made the request somehow
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
             {
@@ -100,6 +107,7 @@ namespace NoDBPART3.Controllers
         [HttpGet("{id}/messages")]
         public IActionResult GetMessages(string id)
         {
+            //has to be changed to the user who made the request somehow
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
             {
@@ -118,6 +126,7 @@ namespace NoDBPART3.Controllers
         [HttpPost("{id}/messages")]
         public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
         {
+            //User user = service.Get(msg.UserId);
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
             {
@@ -131,6 +140,8 @@ namespace NoDBPART3.Controllers
 
             //Message newMsg = new Message(5, "notimportant", msg.Content, true);
             conversationService.AddMessage(id, msg.Content);
+            c.Last = msg.Content;
+            c.Lastdate = DateTime.Now;
             return StatusCode(201);
         }
 
