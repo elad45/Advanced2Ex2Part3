@@ -24,7 +24,7 @@ namespace NoDBPART3.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-        public IActionResult GetAllUsersByNick()
+        public IActionResult GetAllUsernames()
         {
             UserDataService service = new UserDataService();
             List<User> users = service.GetAll();
@@ -32,12 +32,12 @@ namespace NoDBPART3.Controllers
             {
                 return NotFound();
             }
-            List<string> nickNames = new List<string>();
+            List<string> usernames = new List<string>();
             foreach (User user in users)
             {
-                nickNames.Add(user.Name);
+                usernames.Add(user.Id);
             }
-            return Ok(nickNames);
+            return Ok(usernames);
         }
 
     }
