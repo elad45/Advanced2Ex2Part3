@@ -29,6 +29,8 @@ function AddFriend(props) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    
+    
     const handleAdd = () => {
         let friendID = document.getElementById("friendID").value
         let friendNick = document.getElementById("friendNick").value
@@ -50,7 +52,7 @@ function AddFriend(props) {
             }
 
             ///works now its risky
-            props.setFriends((currentFriends) => {
+            props.setContactsData((currentContactsData) => {
                 ///////////////////////////////////////////
                 //now adding friend to database
             const addFriend = async(e) => {    
@@ -62,15 +64,12 @@ function AddFriend(props) {
                 })
                 console.log(valFetch.status);
                 }
-                addFriend();
                 
-
+                addFriend();
                 ///////////////////////////////////////////
-
-
-                let newFriends = [...currentFriends];
-                props.contactsData.push(friendID) 
-                newFriends.push(friendID)
+                let newFriends = [...currentContactsData];
+                let newContact = {Id: friendID, Name: friendNick ,server: friendServer, last: null, lastdate:null} 
+                newFriends.push(newContact)
                 handleClose();
                 console.log(props.contactsData);
                 return newFriends;
