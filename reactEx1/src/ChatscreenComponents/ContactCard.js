@@ -1,5 +1,8 @@
 import usersList from "../usersDB"
 import './ContactCard.css'
+import React from 'react';
+
+
 
 const ContactCard = (props) => {
     //user's friend nicknames
@@ -67,7 +70,7 @@ const ContactCard = (props) => {
                 friendsObjects.map((friend) => (
                     <div onClick={() => { props.setFriendChat(friend) }} id="clicker">
                         <li id="wrapper">
-                            <img src={friend.avatar} />
+                            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
                             <div id="#wrapper-2">
                                 <div id="wrapper-3">
                                     <span className="name">{friend.nickname}</span>

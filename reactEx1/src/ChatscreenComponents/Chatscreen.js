@@ -33,11 +33,15 @@ function Chatscreen(props) {
     //const [friends, setFriends] = useState(loggingUser.friends);
     // const [friends, setFriends] = useState(friendContacts);
     // console.log(friends)
-    
+    ///you are in a good place! start work from here again! (now implemeneting add friend)
     ////////////////////////////////////////////
     var friendContacts=[];
+    //all contacts nicknames
     const [friends, setFriends] = useState([]);
 
+    //all contacts data. "friends" should be removed at the end of the connection between react and server
+    const [contactsData, setContactsData] = useState([]);
+    
     const fetchContacts = async () => {
         const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
             method:'get',
@@ -48,8 +52,10 @@ function Chatscreen(props) {
         
         for (var i=0; i< data.length; i++) {
             friendContacts.push(data[i].name)
+            //friendContacts.push(data[i].id) ------ it should be back to this one!
         }
-        setFriends(friendContacts);
+        setFriends(friendContacts); // have to be replaces by setContactsData at the end because it contains all contacts
+        setContactsData(data);
     }
     
     //now friends contains all the contactId
@@ -107,7 +113,7 @@ function Chatscreen(props) {
                         <div><img id="myAvatar" src={loggingUser.avatar} /></div>
                         <div><span id="myNickname">{loggingUserNickname}</span></div>
                         </div>
-                        <AddFriend loggingUserNickname = {loggingUserNickname} userContacts = {friends} setFriends={setFriends} />
+                        <AddFriend loggedPersonUsername = {loggedPersonUsername} contactsData = {contactsData} setContactsData={setContactsData} />
                     </div>
                     <ContactCard loggingUser={loggingUser} userFriends={friends} setFriendChat={setFriendChat} />
                 </div>
