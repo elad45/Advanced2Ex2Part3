@@ -23,21 +23,21 @@ namespace NoDBPART3.Controllers
             return Ok(u.Name);
         }
 
-        [HttpGet("GetAllUsernames")]
-        public IActionResult GetAllUsersnames()
+        [HttpGet("GetAllUsers")]
+        public IActionResult GetAllUsersByNick()
         {
             UserDataService service = new UserDataService();
             List<User> users = service.GetAll();
-            if(users == null)
+            if (users == null)
             {
                 return NotFound();
             }
-            List<string> usernames = new List<string>();
+            List<string> nickNames = new List<string>();
             foreach (User user in users)
             {
-                usernames.Add(user.Id);
+                nickNames.Add(user.Name);
             }
-            return Ok(usernames);
+            return Ok(nickNames);
         }
 
     }
