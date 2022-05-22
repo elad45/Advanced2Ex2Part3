@@ -3,18 +3,18 @@ import './ContactCard.css'
 
 const ContactCard = (props) => {
     //user's friend nicknames
-    const userFriends = props.userFriends //it's good
+    const userFriends = props.userFriends
     //user's friends objects
     var friendsObjects = []
-    
-    // function creatingFriendsArr(user) {
 
-    //     if (userFriends.includes(user.nickname)) {
-    //         friendsObjects.push(user)
-    //     }
-    // }
-    // // creating the user's friends list out of our whole user Database
-    // usersList.forEach(creatingFriendsArr)
+    function creatingFriendsArr(user) {
+
+        if (userFriends.includes(user.nickname)) {
+            friendsObjects.push(user)
+        }
+    }
+    // creating the user's friends list out of our whole user Database
+    usersList.forEach(creatingFriendsArr)
 
     function timeago(friend) {
         if(props.loggingUser.nickname>=friend.nickname){
@@ -67,7 +67,7 @@ const ContactCard = (props) => {
                 friendsObjects.map((friend) => (
                     <div onClick={() => { props.setFriendChat(friend) }} id="clicker">
                         <li id="wrapper">
-                            <img src= "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
+                            <img src={friend.avatar} />
                             <div id="#wrapper-2">
                                 <div id="wrapper-3">
                                     <span className="name">{friend.nickname}</span>
