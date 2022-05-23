@@ -115,7 +115,7 @@ function Chatscreen(props) {
                         </div>
                         <AddFriend loggedPersonUsername = {loggedPersonUsername} contactsData = {contactsData} setContactsData={setContactsData} />
                     </div>
-                    <ContactCard contactsData = {contactsData} loggingUser={loggingUser} userFriends={friends} setFriendChat={setFriendChat} />
+                    <ContactCard contactsData = {contactsData} userFriends={friends} setFriendChat={setFriendChat} />
                 </div>
                 <div className="chat" id="rightSide">
                     <div className="chat-header" id="chat-header" >
