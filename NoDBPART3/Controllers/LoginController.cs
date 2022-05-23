@@ -18,8 +18,8 @@ namespace NoDBPART3.Controllers
             UserDataService userService = new UserDataService();
             User currentUser = userService.Get(receivedUser.Id);
             if (currentUser == null)
-                return NotFound();
-            else if(currentUser.Password == receivedUser.Password)
+                return StatusCode(404);
+            else if (currentUser.Password == receivedUser.Password)
             {
                 //HttpContext.Session.SetString("LoggedUserID", currentUser.Id);
                 return StatusCode(204);
@@ -27,7 +27,7 @@ namespace NoDBPART3.Controllers
             else
             {
                 //400
-                return NotFound();
+                return StatusCode(400);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NoDBPART3.Models;
 using NoDBPART3.Models.Request;
+using System.Web;
 
 // return Ok(WHatever) - means status code 200
 // return StatusCode(201,WHATEVER I WANT TO RETURN)
@@ -20,29 +21,20 @@ namespace NoDBPART3.Controllers
         // GET: api/<ContactsController>
         //works
         [HttpGet]
+        // returns all the contacts of the current user
         public IActionResult Get()
         {
-            User u = service.Get(UserDataService.loggedUser);
+            string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
+            User u = service.Get(xyz);
+            //User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
             return Ok(u.ContactsList);
         }
 
-        // GET api/<ContactsController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(string id)
-        {
-            User u = service.Get(UserDataService.loggedUser);
-            if (u == null)
-                return NotFound();
-            Contact c = u.ContactsList.Find(x => x.Id == id);
-            if (c == null)
-                return NotFound();
-            return Ok(c);
-        }
-
         // POST api/<ContactsController>
         [HttpPost]
+        // creates a new contact for the current user
         public IActionResult Post([FromBody] AddContactPost request)
         {
             User user = service.Get(request.User);
@@ -58,11 +50,28 @@ namespace NoDBPART3.Controllers
             //
             return StatusCode(201);
         }
+        // GET api/<ContactsController>/5
+        [HttpGet("{id}")]
+        // returns data about contact id = {id}
+        public IActionResult Get(string id)
+        {
+          
+            //has to be changed somehow to the user who sent the request
+            User u = service.Get(UserDataService.loggedUser);
+            if (u == null)
+                return NotFound();
+            Contact c = u.ContactsList.Find(x => x.Id == id);
+            if (c == null)
+                return NotFound();
+            return Ok(c);
+        }
 
         // PUT api/<ContactsController>/5
         [HttpPut("{id}")]
+        // updates data about contact id = {id}
         public IActionResult Put(string id, [FromBody] EditContactPut request)
         {
+            //string userId = service.Get(request.UserId);
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
             {
@@ -80,8 +89,10 @@ namespace NoDBPART3.Controllers
 
         // DELETE api/<ContactsController>/5
         [HttpDelete("{id}")]
+        // deletes data about contact id = {id}
         public IActionResult Delete(string id)
         {
+            //has to be changed to the user who made the request somehow
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
             {
@@ -97,8 +108,10 @@ namespace NoDBPART3.Controllers
         }
 
         [HttpGet("{id}/messages")]
+        // returns all the messages received/sent by the current logged user
         public IActionResult GetMessages(string id)
         {
+            //has to be changed to the user who made the request somehow
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
             {
@@ -115,8 +128,10 @@ namespace NoDBPART3.Controllers
         }
 
         [HttpPost("{id}/messages")]
+        // creates a new message between the contact and the logged user
         public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
         {
+            //User user = service.Get(msg.UserId);
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
             {
@@ -138,6 +153,7 @@ namespace NoDBPART3.Controllers
         [HttpGet("{id}/messages/{id2}")]
         //check if works
         //id is contactId and id2 is msgID
+        // returns a message of ID = {id2}, of the contact that has id = {id}
         public IActionResult GetMsgById(string id, string id2)
         {
             User user = service.Get(UserDataService.loggedUser);
@@ -158,6 +174,7 @@ namespace NoDBPART3.Controllers
         }
 
         [HttpPut("{id}/messages/{id2}")]
+        // edits a message of ID = {id2}, of the contact that has id = {id}
         public IActionResult PutMsgById(string id, string id2, [FromBody] PutMsgById msg)
         {
             User user = service.Get(UserDataService.loggedUser);
@@ -178,6 +195,7 @@ namespace NoDBPART3.Controllers
         }
         
         [HttpDelete("{id}/messages/{id2}")]
+        // deletes a message of ID = {id2}, of the contact that has id = {id}
         public IActionResult DeleteMsgById(string id,string id2)
         {
             User user = service.Get(UserDataService.loggedUser);

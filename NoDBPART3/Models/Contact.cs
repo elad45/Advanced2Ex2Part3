@@ -11,6 +11,7 @@
             Server = server;
             // last message in the conversation with that certain contact
             Last = null;
+            // the time the last message has been sent
             Lastdate = null;
         }
 
@@ -20,7 +21,7 @@
 
 //        public string ContactId { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; }    
 
         public string Server { get; set; }
 

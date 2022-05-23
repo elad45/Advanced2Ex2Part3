@@ -2,10 +2,9 @@
 {
     public class ConversationService : IConversationService
     {
-        private static int loggedUserID;
         private static List<Conversation> conversations = new List<Conversation>()
         {
-            new Conversation() {Id = 1, 
+            new Conversation() {Id = 1,
                                 UsersList=new List<string> { "bob2","alice"},
                                 MessagesList= new List<Message> {
                                                                new Message (1,"bob2","Hello Alice!",false),
@@ -43,6 +42,13 @@
             return conversations.Find(x => x.Id == id);
         }
 
+
+        public Conversation GetConv(string user1, string user2)
+        {
+            return conversations.FirstOrDefault(x => x.UsersList.Contains(user1) &&
+                                                         x.UsersList.Contains(user2));
+        }
+
         public List<Message> GetMessages(string user1)
         {
             var user2 = UserDataService.loggedUser;
@@ -51,29 +57,29 @@
             if (conv == null)
                 return null;
             return conv.MessagesList;
-        }    
-        
-        public Message GetMsgById(string user1,string MsgId)
+        }
+
+        public Message GetMsgById(string user1, string MsgId)
         {
             List<Message> messages = GetMessages(user1);
-  
-            Message msg =  messages.Find(x => x.Id.ToString() == MsgId);
+
+            Message msg = messages.Find(x => x.Id.ToString() == MsgId);
             if (msg == null)
                 return null;
             return msg;
         }
-        
-        public void DeleteMsgById(string user1,string MsgId)
+
+        public void DeleteMsgById(string user1, string MsgId)
         {
             List<Message> messages = GetMessages(user1);
             Message message = messages.Find(msg => msg.Id.ToString() == MsgId);
             messages.Remove(message);
         }
 
-        public void AddMessage(string user1,string content)
+        public void AddMessage(string user1, string content)
         {
             int newMsgId;
-            var user2 = HttpContext.Session.GetString("LoggedUserID");
+            var user2 = UserDataService.loggedUser;
             var conv = conversations.FirstOrDefault(x => x.UsersList.Contains(user1) &&
                                                          x.UsersList.Contains(user2));
             if (conv == null)
@@ -88,12 +94,12 @@
             }
             Message newMsg = new Message(newMsgId, "notimportant", content, true);
             conv.MessagesList.Add(newMsg);
-            
+
         }
-        public int nextConvId ()
+        public int nextConvId()
         {
-            return (conversations.Max (x => x.Id)+1);
+            return (conversations.Max(x => x.Id) + 1);
         }
-        
+
     }
 }
