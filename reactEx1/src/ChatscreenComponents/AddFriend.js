@@ -68,7 +68,7 @@ function AddFriend(props) {
                 addFriend();
                 ///////////////////////////////////////////
                 let newFriends = [...currentContactsData];
-                let newContact = {Id: friendID, name: friendNick ,server: friendServer, last: null, lastdate:null} 
+                let newContact = {id: friendID, name: friendNick ,server: friendServer, last: null, lastdate:null} 
                 newFriends.push(newContact)
                 handleClose();
                 console.log(props.contactsData);
