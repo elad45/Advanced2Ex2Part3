@@ -24,9 +24,9 @@ namespace NoDBPART3.Controllers
         // returns all the contacts of the current user
         public IActionResult Get()
         {
-            string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
-            User u = service.Get(xyz);
-            //User u = service.Get(UserDataService.loggedUser);
+            //string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
+            //User u = service.Get(xyz);
+            User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
             return Ok(u.ContactsList);
@@ -55,7 +55,7 @@ namespace NoDBPART3.Controllers
         // returns data about contact id = {id}
         public IActionResult Get(string id)
         {
-          
+
             //has to be changed somehow to the user who sent the request
             User u = service.Get(UserDataService.loggedUser);
             if (u == null)
@@ -123,16 +123,17 @@ namespace NoDBPART3.Controllers
                 return NotFound();
             }
 
-            List<Message> messages = conversationService.GetMessages(id);
-            return Ok(messages);
+            List<MessageGet> messagesConverted = conversationService.GetMessagesConverted(id);
+            return Ok(messagesConverted);
         }
 
+        //works
         [HttpPost("{id}/messages")]
         // creates a new message between the contact and the logged user
         public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
         {
             //User user = service.Get(msg.UserId);
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(msg.UserId);
             if (user == null)
             {
                 return NotFound();
@@ -144,7 +145,7 @@ namespace NoDBPART3.Controllers
             }
 
             //Message newMsg = new Message(5, "notimportant", msg.Content, true);
-            conversationService.AddMessage(id, msg.Content);
+            conversationService.AddMessage(id, msg.Content, msg.UserId);
             c.Last = msg.Content;
             c.Lastdate = DateTime.Now;
             return StatusCode(201);
@@ -167,10 +168,10 @@ namespace NoDBPART3.Controllers
                 return NotFound();
             }
             //List<Message> messages = conversationService.GetMessages(id);
-            Message msg = conversationService.GetMsgById(id, id2);
-            if (msg == null)
+            MessageGet msgConverted = conversationService.GetMsgByIdConverted(id, id2);
+            if (msgConverted == null)
                 return NotFound();
-            return Ok(msg);
+            return Ok(msgConverted);
         }
 
         [HttpPut("{id}/messages/{id2}")]
@@ -193,10 +194,10 @@ namespace NoDBPART3.Controllers
             msgToChange.Content = msg.Content;
             return StatusCode(204);
         }
-        
+
         [HttpDelete("{id}/messages/{id2}")]
         // deletes a message of ID = {id2}, of the contact that has id = {id}
-        public IActionResult DeleteMsgById(string id,string id2)
+        public IActionResult DeleteMsgById(string id, string id2)
         {
             User user = service.Get(UserDataService.loggedUser);
             if (user == null)
@@ -208,10 +209,9 @@ namespace NoDBPART3.Controllers
             {
                 return NotFound();
             }
-            conversationService.DeleteMsgById(id,id2);
+            conversationService.DeleteMsgById(id, id2);
             return StatusCode(204);
         }
-        
+
     }
 }
-

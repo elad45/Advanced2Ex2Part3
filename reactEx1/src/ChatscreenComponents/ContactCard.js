@@ -5,7 +5,7 @@ import React from 'react';
 
 
 const ContactCard = (props) => {
-
+    console.log(props.contactsData)
     /*
     function timeago(friend) {
         if(props.loggingUser.nickname>=friend.nickname){
