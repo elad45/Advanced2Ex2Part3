@@ -65,10 +65,10 @@ function Chatscreen(props) {
     
     ////////////////////////////////////////////
     
-    // will be updated every time we click on a contact Card
+    // will be updated every time we click on a contact Card. this is contact object
     const [friendChat, setFriendChat] = useState("")
 
-    const [userMessages, setMessage] = useState(loggingUser.chats)
+    const [friendMsg, setFriendMsg] = useState(loggingUser.chats)
 
     
     var handleSendMessage = () => {
@@ -76,24 +76,54 @@ function Chatscreen(props) {
         var newMessageText = document.getElementById("chatBar").value
         // blank message
         if (newMessageText == "") { return }
-        var time = new Date().getTime()
-        var newMessage = new Message(newMessageText, time, "text", loggingUser.nickname, friendChat.nickname)
-        if(loggingUser.nickname>=friendChat.nickname){
-            loggingUser.lastMessages.set(loggingUserNickname + friendChat.nickname, newMessageText + "*" + time)
-            friendChat.lastMessages.set(loggingUserNickname + friendChat.nickname, newMessageText + "*" + time)
-        } else {
-            loggingUser.lastMessages.set(friendChat.nickname + loggingUserNickname, newMessageText + "*" + time)
-            friendChat.lastMessages.set(friendChat.nickname + loggingUserNickname, newMessageText + "*" + time)
-        }
-        loggingUser.chats.push(newMessage)
+        
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        const addMsg = async(e) => {    
+            var valFetch = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages', {
+                method: 'POST',
+                headers: {
+                'Content-Type' : 'application/json'},
+                body: JSON.stringify({content: newMessageText, userid: loggedPersonUsername})
+            })
+            console.log(valFetch.status);
+            }
+                addMsg();
+            
+
+
+        const fetchFriendMsg = async () => {
+            const response = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages',{
+                method:'get',
+                headers: {
+                    'Content-Type' : 'application/json'},
+                })
+            const data = await response.json();
+            setFriendMsg(data);
+            }
+            
+            //now friends contains all the contactId
+            fetchFriendMsg();
+            
+            ////////////////////////////////////////////////////////////////////////////////////////
+        //var time = new Date().getTime()
+        //var newMessage = new Message(newMessageText, time, "text", loggingUser.nickname, friendChat.nickname)
+        //if(loggingUser.nickname>=friendChat.nickname){
+        //    loggingUser.lastMessages.set(loggingUserNickname + friendChat.nickname, newMessageText + "*" + time)
+        //    friendChat.lastMessages.set(loggingUserNickname + friendChat.nickname, newMessageText + "*" + time)
+        //} else {
+        //    loggingUser.lastMessages.set(friendChat.nickname + loggingUserNickname, newMessageText + "*" + time)
+         //   friendChat.lastMessages.set(friendChat.nickname + loggingUserNickname, newMessageText + "*" + time)
+        //}
+        //loggingUser.chats.push(newMessage)
         // temporary line, thats the work of the server
-        friendChat.chats.push(newMessage)
+        //friendChat.chats.push(newMessage)
         document.getElementById("chatBar").value = "";
-        setMessage((messages) => {
-            let newUserMessage = [...messages]
-            newUserMessage.push(newMessage)
-            return newUserMessage
-        })
+        //setMessage((messages) => {
+        //    let newUserMessage = [...messages]
+        //  newUserMessage.push(newMessage)
+        //    return newUserMessage
+        //})
     }
 
 
@@ -115,7 +145,7 @@ function Chatscreen(props) {
                         </div>
                         <AddFriend loggedPersonUsername = {loggedPersonUsername} contactsData = {contactsData} setContactsData={setContactsData} />
                     </div>
-                    <ContactCard contactsData = {contactsData} userFriends={friends} setFriendChat={setFriendChat} />
+                    <ContactCard contactsData = {contactsData} userFriends={friends} setFriendChat={setFriendChat} loggedPersonUsername={loggedPersonUsername} />
                 </div>
                 <div className="chat" id="rightSide">
                     <div className="chat-header" id="chat-header" >
@@ -124,7 +154,7 @@ function Chatscreen(props) {
                             <div className="chat-about" id="chat-header-name">{friendChat.name}</div>
                         </div>
                     </div>
-                    <CurrentChat loggingUser={loggingUser} hisFriend={friendChat} />
+                    <CurrentChat setFriendMsg={setFriendMsg} friendMsg={friendMsg} loggingUser={loggingUser} hisFriend={friendChat} />
                     <div className="input-group mb-3" id="chat-line">
                         <input type="text" className="form-control" id="chatBar" placeholder="New message here..."></input>
                         <button className="btn btn-secondary" id="chatBox" type="button" onClick={handleSendMessage}> Send</button>

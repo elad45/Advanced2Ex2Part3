@@ -40,19 +40,18 @@ const ContactCard = (props) => {
     }
     */
 
-    function lastMessages(friend){
-        if(props.loggingUser.nickname>=friend.nickname){
-            var combinedString = props.loggingUser.lastMessages.get(props.loggingUser.nickname + friend.nickname)
-        } else {
-            var combinedString = props.loggingUser.lastMessages.get(friend.nickname + props.loggingUser.nickname)
-        }
-        if (typeof combinedString === 'string'){
-            let splitString = combinedString.split('*');
-            return splitString[0]
-        }
-        else return ""
-        }
-
+    // function lastMessages(friend){
+    //     if(props.loggingUser.nickname>=friend.nickname){
+    //         var combinedString = props.loggingUser.lastMessages.get(props.loggingUser.nickname + friend.nickname)
+    //     } else {
+    //         var combinedString = props.loggingUser.lastMessages.get(friend.nickname + props.loggingUser.nickname)
+    //     }
+    //     if (typeof combinedString === 'string'){
+    //         let splitString = combinedString.split('*');
+    //         return splitString[0]
+    //     }
+    //     else return ""
+    //     }
     return (
         <ul className="list-unstyled chat-list overflow-auto h-100">
             {
