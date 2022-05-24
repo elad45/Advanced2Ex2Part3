@@ -29,16 +29,16 @@ namespace NoDBPART3.Controllers
             User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
-            List<ContactFixed> contacts = new List<ContactFixed>();
-            foreach(Contact contact in u.ContactsList)
-            {
-                ContactFixed newContact = new ContactFixed(contact.Id, contact.Name, contact.Server);
-                newContact.Last = contact.Last;
-                newContact.Lastdate = TimeAgo(contact.Lastdate);
-                contacts.Add(newContact);
+            //List<ContactFixed> contacts = new List<ContactFixed>();
+            //foreach(Contact contact in u.ContactsList)
+            //{
+            //    ContactFixed newContact = new ContactFixed(contact.Id, contact.Name, contact.Server);
+            //    newContact.Last = contact.Last;
+            //    newContact.Lastdate = TimeAgo(contact.Lastdate);
+            //    contacts.Add(newContact);
 
-            }
-            return Ok(contacts);
+            //}
+            return Ok(u.ContactsList);
         }
 
         // POST api/<ContactsController>
@@ -59,6 +59,30 @@ namespace NoDBPART3.Controllers
             //
             return StatusCode(201);
         }
+
+        [Route("allContacts")]
+        [HttpGet]
+        // returns all the contacts of the current user
+        public IActionResult GetMessagesTimeAgo()
+        {
+            //string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
+            //User u = service.Get(xyz);
+            User u = service.Get(UserDataService.loggedUser);
+            if (u == null)
+                return NotFound();
+            List<ContactFixed> contacts = new List<ContactFixed>();
+            foreach(Contact contact in u.ContactsList)
+            {
+                ContactFixed newContact = new ContactFixed(contact.Id, contact.Name, contact.Server);
+                newContact.Last = contact.Last;
+                newContact.Lastdate = TimeAgo(contact.Lastdate);
+                contacts.Add(newContact);
+
+            }
+            return Ok(contacts);
+        }
+
+
         // GET api/<ContactsController>/5
         [HttpGet("{id}")]
         // returns data about contact id = {id}
