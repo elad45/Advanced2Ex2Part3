@@ -19,14 +19,15 @@ namespace NoDBPART3.Controllers
             conversationService = new ConversationService();
         }
         // GET: api/<ContactsController>
-        //works
+        //have to be checked
         [HttpGet]
         // returns all the contacts of the current user
-        public IActionResult Get()
+        public IActionResult Get(string user)
         {
             //string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
             //User u = service.Get(xyz);
-            User u = service.Get(UserDataService.loggedUser);
+            //User u = service.Get(UserDataService.loggedUser);
+            User u = service.Get(user);
             if (u == null)
                 return NotFound();
             return Ok(u.ContactsList);
@@ -38,6 +39,9 @@ namespace NoDBPART3.Controllers
         // returns all the contacts of the current user
         public IActionResult GetMessagesTimeAgo(string user)
         {
+            //string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
+            //User u = service.Get(xyz);
+            //User u = service.Get(UserDataService.loggedUser);
             User u = service.Get(user);
             if (u == null)
                 return NotFound();
@@ -75,11 +79,11 @@ namespace NoDBPART3.Controllers
         // GET api/<ContactsController>/5
         [HttpGet("{id}")]
         // returns data about contact id = {id}
-        public IActionResult Get(string id)
+        public IActionResult Get(string id, string user)
         {
 
             //has to be changed somehow to the user who sent the request
-            User u = service.Get(UserDataService.loggedUser);
+            User u = service.Get(user);
             if (u == null)
                 return NotFound();
             Contact c = u.ContactsList.Find(x => x.Id == id);

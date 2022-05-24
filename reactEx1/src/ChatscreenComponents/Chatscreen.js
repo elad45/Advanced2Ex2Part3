@@ -43,7 +43,12 @@ function Chatscreen(props) {
     const [contactsData, setContactsData] = useState([]);
     
     const fetchContacts = async () => {
+<<<<<<< HEAD
         const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{
+=======
+        //const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
+          const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{  
+>>>>>>> d59c73408b5f7fbf698b24fd99f6af9e67509938
             method:'get',
             headers: {
                 'Content-Type' : 'application/json'},
@@ -103,8 +108,9 @@ function Chatscreen(props) {
 
             var updateFriendContacts = []
             const updateContacts = async () => {
-                const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{
-                    method:'get',
+                //const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
+                const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{  
+                   method:'get',
                     headers: {
                         'Content-Type' : 'application/json'},
                 })
