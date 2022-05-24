@@ -10,7 +10,7 @@ namespace NoDBPART3.Controllers
     public class RegisterController : ControllerBase
     {
         [HttpPost]
-        //we use it. should work
+        //we use it.
         public IActionResult Post([FromBody] User newUser)
         {
             UserDataService userService = new UserDataService();

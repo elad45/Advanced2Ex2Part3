@@ -60,9 +60,9 @@
             return msgConvertedList;
         }
 
-        public Message GetMsgById(string user1, string MsgId)
+        public Message GetMsgById(string user1, string MsgId,string user2)
         {
-            List<Message> messages = GetMessages(user1);
+            List<Message> messages = GetMessages(user1, user2);
 
             Message msg = messages.Find(x => x.Id.ToString() == MsgId);
             if (msg == null)
@@ -71,9 +71,8 @@
         }
 
         //works
-        public List<Message> GetMessages(string user1)
+        public List<Message> GetMessages(string user1, string user2)
         {
-            var user2 = UserDataService.loggedUser;
             var conv = conversations.FirstOrDefault(x => x.UsersList.Contains(user1) &&
                                                          x.UsersList.Contains(user2));
             if (conv == null)
@@ -92,9 +91,9 @@
             return msgConverted;
         }
         //should work
-        public void DeleteMsgById(string user1, string MsgId)
+        public void DeleteMsgById(string user1, string MsgId, string user2)
         {
-            List<Message> messages = GetMessages(user1);
+            List<Message> messages = GetMessages(user1, user2);
             Message message = messages.Find(msg => msg.Id.ToString() == MsgId);
             messages.Remove(message);
         }

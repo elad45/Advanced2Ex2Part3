@@ -2,7 +2,7 @@
 {
     public class UserDataService : IUserDataService
     {
-        public static string loggedUser = "bob2";
+        //public static string loggedUser = "bob2";
 
         private static List<User> users = new List<User>()
         {

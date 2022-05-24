@@ -98,7 +98,7 @@ namespace NoDBPART3.Controllers
         public IActionResult Put(string id, [FromBody] EditContactPut request)
         {
             //string userId = service.Get(request.UserId);
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(request.UserId);
             if (user == null)
             {
                 return NotFound();
@@ -116,10 +116,10 @@ namespace NoDBPART3.Controllers
         // DELETE api/<ContactsController>/5
         [HttpDelete("{id}")]
         // deletes data about contact id = {id}
-        public IActionResult Delete(string id)
+        public IActionResult Delete(string id, string userId)
         {
             //has to be changed to the user who made the request somehow
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(userId);
             if (user == null)
             {
                 return NotFound();
@@ -207,7 +207,7 @@ namespace NoDBPART3.Controllers
         // edits a message of ID = {id2}, of the contact that has id = {id}
         public IActionResult PutMsgById(string id, string id2, [FromBody] PutMsgById msg)
         {
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(msg.UserId);
             if (user == null)
             {
                 return NotFound();
@@ -217,7 +217,7 @@ namespace NoDBPART3.Controllers
             {
                 return NotFound();
             }
-            Message msgToChange = conversationService.GetMsgById(id, id2);
+            Message msgToChange = conversationService.GetMsgById(id, id2,msg.UserId);
             if (msg == null)
                 return NotFound();
             msgToChange.Content = msg.Content;
@@ -226,9 +226,9 @@ namespace NoDBPART3.Controllers
 
         [HttpDelete("{id}/messages/{id2}")]
         // deletes a message of ID = {id2}, of the contact that has id = {id}
-        public IActionResult DeleteMsgById(string id, string id2)
+        public IActionResult DeleteMsgById(string id, string id2,string userId)
         {
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(userId);
             if (user == null)
             {
                 return NotFound();
@@ -238,7 +238,7 @@ namespace NoDBPART3.Controllers
             {
                 return NotFound();
             }
-            conversationService.DeleteMsgById(id, id2);
+            conversationService.DeleteMsgById(id, id2, userId);
             return StatusCode(204);
         }
         private static string TimeAgo(DateTime? time)
