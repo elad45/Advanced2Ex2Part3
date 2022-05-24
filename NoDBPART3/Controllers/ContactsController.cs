@@ -19,14 +19,15 @@ namespace NoDBPART3.Controllers
             conversationService = new ConversationService();
         }
         // GET: api/<ContactsController>
-        //works
+        //have to be checked
         [HttpGet]
         // returns all the contacts of the current user
-        public IActionResult Get()
+        public IActionResult Get(string user)
         {
             //string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
             //User u = service.Get(xyz);
-            User u = service.Get(UserDataService.loggedUser);
+            //User u = service.Get(UserDataService.loggedUser);
+            User u = service.Get(user);
             if (u == null)
                 return NotFound();
             //List<ContactFixed> contacts = new List<ContactFixed>();
@@ -63,11 +64,12 @@ namespace NoDBPART3.Controllers
         [Route("allContacts")]
         [HttpGet]
         // returns all the contacts of the current user
-        public IActionResult GetMessagesTimeAgo()
+        public IActionResult GetMessagesTimeAgo(string user)
         {
             //string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
             //User u = service.Get(xyz);
-            User u = service.Get(UserDataService.loggedUser);
+            //User u = service.Get(UserDataService.loggedUser);
+            User u = service.Get(user);
             if (u == null)
                 return NotFound();
             List<ContactFixed> contacts = new List<ContactFixed>();
@@ -86,11 +88,11 @@ namespace NoDBPART3.Controllers
         // GET api/<ContactsController>/5
         [HttpGet("{id}")]
         // returns data about contact id = {id}
-        public IActionResult Get(string id)
+        public IActionResult Get(string id, string user)
         {
 
             //has to be changed somehow to the user who sent the request
-            User u = service.Get(UserDataService.loggedUser);
+            User u = service.Get(user);
             if (u == null)
                 return NotFound();
             Contact c = u.ContactsList.Find(x => x.Id == id);
@@ -142,15 +144,15 @@ namespace NoDBPART3.Controllers
 
         [HttpGet("{id}/messages")]
         // returns all the messages received/sent by the current logged user
-        public IActionResult GetMessages(string id)
+        public IActionResult GetMessages(string id, string user)
         {
             //has to be changed to the user who made the request somehow
-            User user = service.Get(UserDataService.loggedUser);
-            if (user == null)
+            User u = service.Get(user);
+            if (u == null)
             {
                 return NotFound();
             }
-            Contact c = user.ContactsList.Find(x => x.Id == id);
+            Contact c = u.ContactsList.Find(x => x.Id == id);
             if (c == null)
             {
                 return NotFound();

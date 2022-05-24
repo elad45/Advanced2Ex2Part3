@@ -23,6 +23,7 @@ namespace NoDBPART3.Controllers
             return Ok(u.Name);
         }
 
+        //this is fine
         [HttpGet("GetAllUsers")]
         public IActionResult GetAllUsernames()
         {
