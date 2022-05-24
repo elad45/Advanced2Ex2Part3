@@ -13,6 +13,7 @@ namespace NoDBPART3.Controllers
         // GET: api/<UsersController>
         [HttpGet]
         //returns user nickname
+        //we use it
         public IActionResult Get()
         {
             string loggedUserId = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
@@ -23,6 +24,7 @@ namespace NoDBPART3.Controllers
             return Ok(u.Name);
         }
 
+        //we use it
         [HttpGet("GetAllUsers")]
         public IActionResult GetAllUsernames()
         {

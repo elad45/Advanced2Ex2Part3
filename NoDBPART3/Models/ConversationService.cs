@@ -49,9 +49,9 @@
                                                          x.UsersList.Contains(user2));
         }
         //have to be checked
-        public List<MessageGet> GetMessagesConverted(string user1)
+        public List<MessageGet> GetMessagesConverted(string user1, string user2)
         {
-            var user2 = UserDataService.loggedUser;
+            //var user2 = UserDataService.loggedUser;
             var conv = conversations.FirstOrDefault(x => x.UsersList.Contains(user1) &&
                                                          x.UsersList.Contains(user2));
             if (conv == null)
@@ -82,9 +82,9 @@
         }
 
         //have to be checked
-        public MessageGet GetMsgByIdConverted(string user1, string MsgId)
+        public MessageGet GetMsgByIdConverted(string user1, string MsgId, string user)
         {
-            List<MessageGet> messages = GetMessagesConverted(user1);
+            List<MessageGet> messages = GetMessagesConverted(user1, user);
 
             MessageGet msgConverted = messages.Find(x => x.Id.ToString() == MsgId);
             if (msgConverted == null)

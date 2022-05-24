@@ -12,6 +12,7 @@ namespace NoDBPART3.Controllers
     {
 
         // POST api/<LoginController>
+        //we use it
         [HttpPost]
         public IActionResult Post([FromBody] Login receivedUser)
         {

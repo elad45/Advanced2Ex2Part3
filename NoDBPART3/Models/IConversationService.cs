@@ -14,7 +14,7 @@
 
         public List<Message> GetMessages(string user1);
 
-        public MessageGet GetMsgByIdConverted(string user1, string MsgId);
+        public MessageGet GetMsgByIdConverted(string user1, string MsgId,string user);
 
         public Message GetMsgById(string user1, string MsgId);
 
@@ -23,7 +23,7 @@
         public int nextConvId();
         public void AddMessage(string contactId, string content, string userId);
 
-        public List<MessageGet> GetMessagesConverted(string user1);
+        public List<MessageGet> GetMessagesConverted(string user1, string user2);
 
         public List<MessageGet> convertMessage(List<Message> messages, string userId);
     }

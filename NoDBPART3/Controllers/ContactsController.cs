@@ -34,6 +34,7 @@ namespace NoDBPART3.Controllers
 
         [Route("allContacts")]
         [HttpGet]
+        //we use it
         // returns all the contacts of the current user
         public IActionResult GetMessagesTimeAgo(string user)
         {
@@ -54,6 +55,7 @@ namespace NoDBPART3.Controllers
 
         // POST api/<ContactsController>
         [HttpPost]
+        //we use it
         // creates a new contact for the current user
         public IActionResult Post([FromBody] AddContactPost request)
         {
@@ -65,7 +67,7 @@ namespace NoDBPART3.Controllers
             Contact c = new Contact(request.Id, request.Name, request.Server);
             user.AddContact(c);
             //trying to add conv ------ have to be tested ----
-            Conversation conv = new Conversation(conversationService.nextConvId(), request.Id, UserDataService.loggedUser);
+            Conversation conv = new Conversation(conversationService.nextConvId(), request.Id, request.User);
             conversationService.Add(conv);
             //
             return StatusCode(201);
@@ -127,27 +129,28 @@ namespace NoDBPART3.Controllers
             return StatusCode(204);
         }
 
+        //we use it
         [HttpGet("{id}/messages")]
         // returns all the messages received/sent by the current logged user
-        public IActionResult GetMessages(string id)
+        public IActionResult GetMessages(string id, string user)
         {
             //has to be changed to the user who made the request somehow
-            User user = service.Get(UserDataService.loggedUser);
-            if (user == null)
+            User u = service.Get(user);
+            if (u == null)
             {
                 return NotFound();
             }
-            Contact c = user.ContactsList.Find(x => x.Id == id);
+            Contact c = u.ContactsList.Find(x => x.Id == id);
             if (c == null)
             {
                 return NotFound();
             }
 
-            List<MessageGet> messagesConverted = conversationService.GetMessagesConverted(id);
+            List<MessageGet> messagesConverted = conversationService.GetMessagesConverted(id,user);
             return Ok(messagesConverted);
         }
 
-        //works
+        //we use it
         [HttpPost("{id}/messages")]
         // creates a new message between the contact and the logged user
         public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
@@ -177,20 +180,20 @@ namespace NoDBPART3.Controllers
         //check if works
         //id is contactId and id2 is msgID
         // returns a message of ID = {id2}, of the contact that has id = {id}
-        public IActionResult GetMsgById(string id, string id2)
+        public IActionResult GetMsgById(string id, string id2, string user)
         {
-            User user = service.Get(UserDataService.loggedUser);
+            User u = service.Get(user);
             if (user == null)
             {
                 return NotFound();
             }
-            Contact c = user.ContactsList.Find(x => x.Id == id);
+            Contact c = u.ContactsList.Find(x => x.Id == id);
             if (c == null)
             {
                 return NotFound();
             }
             //List<Message> messages = conversationService.GetMessages(id);
-            MessageGet msgConverted = conversationService.GetMsgByIdConverted(id, id2);
+            MessageGet msgConverted = conversationService.GetMsgByIdConverted(id, id2, user);
             if (msgConverted == null)
                 return NotFound();
             return Ok(msgConverted);
@@ -237,6 +240,8 @@ namespace NoDBPART3.Controllers
         private static string TimeAgo(DateTime? time)
         {
             string result = string.Empty;
+            if (time == null)
+                return null;
             var timeSpan = DateTime.Now.Subtract((DateTime)time);
 
             if (timeSpan <= TimeSpan.FromSeconds(60))
