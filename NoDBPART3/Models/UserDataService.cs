@@ -79,6 +79,5 @@
         {
             users.Remove(Get(id));
         }
-        
     }
 }

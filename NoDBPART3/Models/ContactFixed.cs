@@ -1,8 +1,8 @@
 ﻿namespace NoDBPART3.Models
 {
-    public class Contact
+    public class ContactFixed
     {
-        public Contact(/*string userId*/ string id, /*string contactId*/string name, string server)
+        public ContactFixed(/*string userId*/ string id, /*string contactId*/string name, string server)
         {
             //UserId = userId;
             Id = id;
@@ -12,7 +12,7 @@
             // last message in the conversation with that certain contact
             Last = null;
             // the time the last message has been sent
-            Lastdate = default;
+            Lastdate = null;
         }
 
     //    public string UserId { get; set; }
@@ -27,6 +27,6 @@
 
         public string Last { get; set; }
 
-        public DateTime Lastdate { get; set; }
+        public string Lastdate { get; set; }
     }
 }

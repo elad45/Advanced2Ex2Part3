@@ -29,7 +29,16 @@ namespace NoDBPART3.Controllers
             User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
-            return Ok(u.ContactsList);
+            List<ContactFixed> contacts = new List<ContactFixed>();
+            foreach(Contact contact in u.ContactsList)
+            {
+                ContactFixed newContact = new ContactFixed(contact.Id, contact.Name, contact.Server);
+                newContact.Last = contact.Last;
+                newContact.Lastdate = TimeAgo(contact.Lastdate);
+                contacts.Add(newContact);
+
+            }
+            return Ok(contacts);
         }
 
         // POST api/<ContactsController>
@@ -132,6 +141,7 @@ namespace NoDBPART3.Controllers
         // creates a new message between the contact and the logged user
         public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
         {
+
             //User user = service.Get(msg.UserId);
             User user = service.Get(msg.UserId);
             if (user == null)
@@ -147,6 +157,7 @@ namespace NoDBPART3.Controllers
             //Message newMsg = new Message(5, "notimportant", msg.Content, true);
             conversationService.AddMessage(id, msg.Content, msg.UserId);
             c.Last = msg.Content;
+            //var timeAgoService = new TimeAgoService(DateTime.Now);
             c.Lastdate = DateTime.Now;
             return StatusCode(201);
         }
@@ -212,6 +223,38 @@ namespace NoDBPART3.Controllers
             conversationService.DeleteMsgById(id, id2);
             return StatusCode(204);
         }
+        private static string TimeAgo(DateTime time)
+        {
+            string result = string.Empty;
+            var timeSpan = DateTime.Now.Subtract(time);
 
+            if (timeSpan <= TimeSpan.FromSeconds(60))
+            {
+                result = string.Format("{0}s ago", timeSpan.Seconds);
+            }
+            else if (timeSpan <= TimeSpan.FromMinutes(60))
+            {
+                result = String.Format("{0}m ago", timeSpan.Minutes);
+            }
+            else if (timeSpan <= TimeSpan.FromHours(24))
+            {
+                result = String.Format("{0}h ago", timeSpan.Hours);
+            }
+            else if (timeSpan <= TimeSpan.FromDays(30))
+            {
+                result = String.Format("{0}d ago", timeSpan.Days);
+            }
+            else if (timeSpan <= TimeSpan.FromDays(365))
+            {
+                result = String.Format("{0}m ago", timeSpan.Days / 30);
+            }
+            else
+            {
+                result = timeSpan.Days > 365 ?
+                    String.Format("about {0}y ago", timeSpan.Days / 365) :
+                    "about a year ago";
+            }
+            return result;
+        }
     }
 }
