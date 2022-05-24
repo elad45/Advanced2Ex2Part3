@@ -23,13 +23,12 @@ namespace NoDBPART3.Controllers
             return Ok(u.Name);
         }
 
-        //this is fine
         [HttpGet("GetAllUsers")]
         public IActionResult GetAllUsernames()
         {
             UserDataService service = new UserDataService();
             List<User> users = service.GetAll();
-            if(users == null)
+            if (users == null)
             {
                 return NotFound();
             }

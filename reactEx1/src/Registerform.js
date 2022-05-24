@@ -56,7 +56,7 @@ import React from 'react';
             //wrong username
             if(valFetch.status == 404)
                 alert("Username already exists");
-            //wrong password
+            //nickname already exists - should be removed.
             else if (valFetch.status == 405)
                 alert("Nickname already exists");    
             //logged in
@@ -64,7 +64,6 @@ import React from 'react';
                 localStorage.setItem('currentUser', userID);
                 navigate("/chat");
             }
-
         }
         //checks if username already exists in the database
         /*if (usersList.find(x => x.username === userID)) {

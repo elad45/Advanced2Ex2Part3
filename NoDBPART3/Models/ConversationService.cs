@@ -100,7 +100,7 @@
         }
 
         //should work
-        public void AddMessage(string contactId, string content,string userId)
+        public void AddMessage(string contactId, string content, string userId)
         {
             int newMsgId;
             //var user2 = UserDataService.loggedUser;
@@ -128,7 +128,7 @@
 
         //have to be tested
         //convert the messages to as we want it to be at the API when returning to the user
-        public List<MessageGet> convertMessage (List<Message> messages, string userId)
+        public List<MessageGet> convertMessage(List<Message> messages, string userId)
         {
             List<MessageGet> messageRet = new List<MessageGet>();
             foreach (var message in messages)

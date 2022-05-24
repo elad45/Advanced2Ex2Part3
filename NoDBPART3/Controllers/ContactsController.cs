@@ -19,27 +19,37 @@ namespace NoDBPART3.Controllers
             conversationService = new ConversationService();
         }
         // GET: api/<ContactsController>
-        //have to be checked
+        //works
         [HttpGet]
         // returns all the contacts of the current user
-        public IActionResult Get(string user)
+        public IActionResult Get()
         {
             //string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
             //User u = service.Get(xyz);
-            //User u = service.Get(UserDataService.loggedUser);
+            User u = service.Get(UserDataService.loggedUser);
+            if (u == null)
+                return NotFound();
+            return Ok(u.ContactsList);
+        }
+
+        [Route("allContacts")]
+        [HttpGet]
+        // returns all the contacts of the current user
+        public IActionResult GetMessagesTimeAgo(string user)
+        {
             User u = service.Get(user);
             if (u == null)
                 return NotFound();
-            //List<ContactFixed> contacts = new List<ContactFixed>();
-            //foreach(Contact contact in u.ContactsList)
-            //{
-            //    ContactFixed newContact = new ContactFixed(contact.Id, contact.Name, contact.Server);
-            //    newContact.Last = contact.Last;
-            //    newContact.Lastdate = TimeAgo(contact.Lastdate);
-            //    contacts.Add(newContact);
+            List<ContactFixed> contacts = new List<ContactFixed>();
+            foreach (Contact contact in u.ContactsList)
+            {
+                ContactFixed newContact = new ContactFixed(contact.Id, contact.Name, contact.Server);
+                newContact.Last = contact.Last;
+                newContact.Lastdate = TimeAgo(contact.Lastdate);
+                contacts.Add(newContact);
 
-            //}
-            return Ok(u.ContactsList);
+            }
+            return Ok(contacts);
         }
 
         // POST api/<ContactsController>
@@ -60,39 +70,14 @@ namespace NoDBPART3.Controllers
             //
             return StatusCode(201);
         }
-
-        [Route("allContacts")]
-        [HttpGet]
-        // returns all the contacts of the current user
-        public IActionResult GetMessagesTimeAgo(string user)
-        {
-            //string xyz = Uri.UnescapeDataString(HttpUtility.ParseQueryString(Request.QueryString.ToString()).Get("user"));
-            //User u = service.Get(xyz);
-            //User u = service.Get(UserDataService.loggedUser);
-            User u = service.Get(user);
-            if (u == null)
-                return NotFound();
-            List<ContactFixed> contacts = new List<ContactFixed>();
-            foreach(Contact contact in u.ContactsList)
-            {
-                ContactFixed newContact = new ContactFixed(contact.Id, contact.Name, contact.Server);
-                newContact.Last = contact.Last;
-                newContact.Lastdate = TimeAgo(contact.Lastdate);
-                contacts.Add(newContact);
-
-            }
-            return Ok(contacts);
-        }
-
-
         // GET api/<ContactsController>/5
         [HttpGet("{id}")]
         // returns data about contact id = {id}
-        public IActionResult Get(string id, string user)
+        public IActionResult Get(string id)
         {
 
             //has to be changed somehow to the user who sent the request
-            User u = service.Get(user);
+            User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
             Contact c = u.ContactsList.Find(x => x.Id == id);
@@ -144,15 +129,15 @@ namespace NoDBPART3.Controllers
 
         [HttpGet("{id}/messages")]
         // returns all the messages received/sent by the current logged user
-        public IActionResult GetMessages(string id, string user)
+        public IActionResult GetMessages(string id)
         {
             //has to be changed to the user who made the request somehow
-            User u = service.Get(user);
-            if (u == null)
+            User user = service.Get(UserDataService.loggedUser);
+            if (user == null)
             {
                 return NotFound();
             }
-            Contact c = u.ContactsList.Find(x => x.Id == id);
+            Contact c = user.ContactsList.Find(x => x.Id == id);
             if (c == null)
             {
                 return NotFound();
@@ -249,10 +234,10 @@ namespace NoDBPART3.Controllers
             conversationService.DeleteMsgById(id, id2);
             return StatusCode(204);
         }
-        private static string TimeAgo(DateTime time)
+        private static string TimeAgo(DateTime? time)
         {
             string result = string.Empty;
-            var timeSpan = DateTime.Now.Subtract(time);
+            var timeSpan = DateTime.Now.Subtract((DateTime)time);
 
             if (timeSpan <= TimeSpan.FromSeconds(60))
             {

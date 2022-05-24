@@ -12,21 +12,21 @@
             // last message in the conversation with that certain contact
             Last = null;
             // the time the last message has been sent
-            Lastdate = default;
+            Lastdate = null;
         }
 
-    //    public string UserId { get; set; }
+        //    public string UserId { get; set; }
         //this is contact id
         public string Id { get; set; }
 
-//        public string ContactId { get; set; }
+        //        public string ContactId { get; set; }
 
-        public string Name { get; set; }    
+        public string Name { get; set; }
 
         public string Server { get; set; }
 
         public string Last { get; set; }
 
-        public DateTime Lastdate { get; set; }
+        public DateTime? Lastdate { get; set; }
     }
 }

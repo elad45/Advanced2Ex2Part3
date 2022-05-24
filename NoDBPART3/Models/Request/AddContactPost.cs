@@ -7,7 +7,7 @@
         public string Name { get; set; }
 
         public string Server { get; set; }
-        
+
         //UserId (LOGGED USER)
         public string User { get; set; }
     }
