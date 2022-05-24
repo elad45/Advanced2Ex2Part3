@@ -19,6 +19,12 @@ else
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Search">
+    <input name="query" id="search"/>
+    <input type="submit" value="Search"/>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -61,3 +67,7 @@ else
 }
     </tbody>
 </table>
+
+@section Scripts{
+<script src = "~/js/search.js"></script>
+}

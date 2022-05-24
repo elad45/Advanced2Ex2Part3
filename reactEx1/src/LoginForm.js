@@ -13,6 +13,7 @@ function LoginForm() {
         loggingID = document.getElementById("loginID").value;
 
         //valFetch is the returned value from login page
+        
         var valFetch = await fetch('http://localhost:5094/api/Login', {
             method: 'POST',
             headers: {

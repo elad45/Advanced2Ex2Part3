@@ -1,9 +1,5 @@
 .registerbox{
-    padding-top:0%;
-    margin-top:0%;
-    padding-left: 2%;
-    left:50%;
-    width:30%;
+    width:32%;
     background:rgb(194, 157, 145);
     position:absoulte;
     transform: translate(+105%,+8%);
@@ -19,5 +15,4 @@
 
   .registerbox input{
       border-left:2%;
-      margin-left: 12%;
   }

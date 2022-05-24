@@ -1,7 +1,5 @@
 .loginbox{
-    top:50%;
-    left:50%;
-    width:30%;
+    width: 32%;
     background:rgb(194, 157, 145);
     position:absoulte;
     transform: translate(+105%,+15%);
@@ -12,10 +10,5 @@
 
   .loginbox h1{
       color: white;
-      margin-top: 4%;
-  }
-
-  .loginbox input{
-      border-left:2%;
-      margin-left: 12%;
+      margin-top: 12px;
   }

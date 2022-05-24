@@ -51,9 +51,18 @@ namespace ReviewsPart2.Controllers
         
         public async Task<IActionResult> Search2(string query) //string name is query because of the "name" we gave is query
         {
-            var q = _context.Review.Where(review => review.Name.Contains(query) ||
-                                                    review.Feedback.Contains(query));
-            return PartialView(await q.ToListAsync());
+           
+            if (query == null)
+            {
+                 var q = _context.Review;
+                return PartialView(await q.ToListAsync());
+            }
+            else
+            {
+                 var q = _context.Review.Where(review => review.Name.Contains(query) ||
+                                                        review.Feedback.Contains(query));
+                return PartialView(await q.ToListAsync());
+            }
         }
 
         public async Task<IActionResult> Search3(string query) //string name is query because of the "name" we gave is query

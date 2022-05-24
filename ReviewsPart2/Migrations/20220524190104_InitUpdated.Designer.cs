@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReviewsPart2.Data;
 
@@ -11,9 +12,10 @@ using ReviewsPart2.Data;
 namespace ReviewsPart2.Migrations
 {
     [DbContext(typeof(ReviewsPart2Context))]
-    partial class ReviewsPart2ContextModelSnapshot : ModelSnapshot
+    [Migration("20220524190104_InitUpdated")]
+    partial class InitUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

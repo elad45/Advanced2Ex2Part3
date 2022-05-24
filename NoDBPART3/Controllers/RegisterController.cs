@@ -10,6 +10,7 @@ namespace NoDBPART3.Controllers
     public class RegisterController : ControllerBase
     {
         [HttpPost]
+        //we use it. should work
         public IActionResult Post([FromBody] User newUser)
         {
             UserDataService userService = new UserDataService();
@@ -21,8 +22,8 @@ namespace NoDBPART3.Controllers
             if (currentUser != null)
                 return StatusCode(404);
             //nickname already exists
-            else if (userService.GetAll().Find(x => x.Name == newUser.Name) != null)
-                return StatusCode(405);
+            //else if (userService.GetAll().Find(x => x.Name == newUser.Name) != null)
+            //    return StatusCode(405);
             else
             {
                 //add new user

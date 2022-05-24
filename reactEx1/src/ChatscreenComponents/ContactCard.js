@@ -8,7 +8,7 @@ const ContactCard = (props) => {
     console.log(props.contactsData)
     function currentMessages(friend){
         const fetchCurrentMessages = async () => {
-            const response = await fetch('http://localhost:5094/api/Contacts/'+friend.id+'/messages',{
+            const response = await fetch('http://localhost:5094/api/Contacts/'+friend.id+'/messages?user='+props.loggedPersonUsername,{
                 method:'get',
                 headers: {
                     'Content-Type' : 'application/json'},

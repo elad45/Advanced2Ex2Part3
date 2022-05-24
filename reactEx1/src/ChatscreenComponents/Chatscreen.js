@@ -43,7 +43,8 @@ function Chatscreen(props) {
     const [contactsData, setContactsData] = useState([]);
     
     const fetchContacts = async () => {
-        const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{
+        //const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
+          const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{  
             method:'get',
             headers: {
                 'Content-Type' : 'application/json'},
@@ -89,7 +90,7 @@ function Chatscreen(props) {
             await addMsg();
 
         const fetchFriendMsg = async () => {
-            const response = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages',{
+            const response = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages?user='+loggedPersonUsername,{
                 method:'get',
                 headers: {
                     'Content-Type' : 'application/json'},
@@ -103,8 +104,9 @@ function Chatscreen(props) {
 
             var updateFriendContacts = []
             const updateContacts = async () => {
-                const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{
-                    method:'get',
+                //const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
+                const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{  
+                   method:'get',
                     headers: {
                         'Content-Type' : 'application/json'},
                 })

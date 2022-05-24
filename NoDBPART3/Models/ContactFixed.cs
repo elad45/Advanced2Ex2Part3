@@ -15,13 +15,13 @@
             Lastdate = null;
         }
 
-    //    public string UserId { get; set; }
+        //    public string UserId { get; set; }
         //this is contact id
         public string Id { get; set; }
 
-//        public string ContactId { get; set; }
+        //        public string ContactId { get; set; }
 
-        public string Name { get; set; }    
+        public string Name { get; set; }
 
         public string Server { get; set; }
 
