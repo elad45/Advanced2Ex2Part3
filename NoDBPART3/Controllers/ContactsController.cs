@@ -29,8 +29,19 @@ namespace NoDBPART3.Controllers
             User u = service.Get(UserDataService.loggedUser);
             if (u == null)
                 return NotFound();
+            return Ok(u.ContactsList);
+        }
+
+        [Route("allContacts")]
+        [HttpGet]
+        // returns all the contacts of the current user
+        public IActionResult GetMessagesTimeAgo(string user)
+        {
+            User u = service.Get(user);
+            if (u == null)
+                return NotFound();
             List<ContactFixed> contacts = new List<ContactFixed>();
-            foreach(Contact contact in u.ContactsList)
+            foreach (Contact contact in u.ContactsList)
             {
                 ContactFixed newContact = new ContactFixed(contact.Id, contact.Name, contact.Server);
                 newContact.Last = contact.Last;
@@ -223,10 +234,10 @@ namespace NoDBPART3.Controllers
             conversationService.DeleteMsgById(id, id2);
             return StatusCode(204);
         }
-        private static string TimeAgo(DateTime time)
+        private static string TimeAgo(DateTime? time)
         {
             string result = string.Empty;
-            var timeSpan = DateTime.Now.Subtract(time);
+            var timeSpan = DateTime.Now.Subtract((DateTime)time);
 
             if (timeSpan <= TimeSpan.FromSeconds(60))
             {

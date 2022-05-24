@@ -43,7 +43,7 @@ function Chatscreen(props) {
     const [contactsData, setContactsData] = useState([]);
     
     const fetchContacts = async () => {
-        const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
+        const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{
             method:'get',
             headers: {
                 'Content-Type' : 'application/json'},
@@ -72,7 +72,7 @@ function Chatscreen(props) {
 
 
 
-    var handleSendMessage = () => {
+    var handleSendMessage = async () => {
 
         var newMessageText = document.getElementById("chatBar").value
         // blank message
@@ -86,7 +86,7 @@ function Chatscreen(props) {
             })
             console.log(valFetch.status);
             }
-            addMsg();
+            await addMsg();
 
         const fetchFriendMsg = async () => {
             const response = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages',{
@@ -103,7 +103,7 @@ function Chatscreen(props) {
 
             var updateFriendContacts = []
             const updateContacts = async () => {
-                const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
+                const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{
                     method:'get',
                     headers: {
                         'Content-Type' : 'application/json'},
