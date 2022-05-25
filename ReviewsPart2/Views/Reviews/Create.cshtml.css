@@ -15,12 +15,10 @@
     }
 
 .field {
-    padding-left: 30px;
-    padding-bottom: 10px;
-    font-size: 20px;
-    font-weight: 700;
-    max-height: 100px;
-    line-break: anywhere;
+    display: grid;
+    grid-template-columns: 20% 60%;
+    padding-bottom: 15px;
+    padding-left: 20px;
 }
 
     .field > div {

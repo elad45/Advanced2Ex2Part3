@@ -2,9 +2,9 @@
     $('form').submit(async e => {
         e.preventDefault();
 
-        const q = $('#search').val();
+        const q = $('#searchInput').val();
 
-        $('tbody').load('/Reviews/Search2?query='+q);
+        $('#mainData').load('/Reviews/Search2?query='+q);
        /* fetch('/Reviews/Search3?query=' + q)
             .then(response => response.json())
             .then(data => {

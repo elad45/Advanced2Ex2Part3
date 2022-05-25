@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ReviewsPart2.Models.Review>
+
+@{
+    ViewData["Title"] = "Index";
+}
+//
+@foreach (var item in Model)
+{
+    <div class="data">
+        <div id="name" class="overflow-auto h-100">
+            @Html.DisplayFor(modelItem => item.Name)
+        </div>
+        <div id="feedback" class="overflow-auto h-100">
+            @Html.DisplayFor(modelItem => item.Feedback)
+        </div>
+        <div id="rating" class="overflow-auto h-100">
+            @Html.DisplayFor(modelItem => item.Rating)
+        </div>
+        <div id="date" class="overflow-auto h-100">
+            @Html.DisplayFor(modelItem => item.Date)
+            <div id="changers">
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </div>
+        </div>
+    </div>
+}
