@@ -3,71 +3,74 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<label>Average rating is:</label>
-@if (Model.Count() > 0)
-{
-    @Model.Average(x=> x.Rating);
-}
-else
-{
-    @Model.Sum(r=> r.Rating);
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<form asp-action="Search">
-    <input name="query" id="search"/>
-    <input type="submit" value="Search"/>
-</form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
+//
+<div id="padding">
+    <div id="page-location">
+        <div id="features">
+            <center id="reviewCreator">
+                <a asp-action="Create">Create New Review</a>
+            </center>
+            <center id="average-rating">
+                <label>Average rating is:</label>
+                @if (Model.Count() > 0)
+                {
+                    @String.Format("{0:0.00}", Model.Average(x=> x.Rating))
+                    ;
+                }
+                else
+                {
+                    @String.Format("{0:0.00}",Model.Sum(r=> r.Rating))
+                    ;
+                }
+            </center>
+            <center>
+                <form asp-action="Search2">
+                    <div class="input-group mb-3" id="searchBar">
+                        <input id="searchInput" name="query" type="text" class="form-control" placeholder="Enter name/feedback" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <input class="btn btn-secondary" id="searchButton" type="submit" value="Search" />
+                        </div>
+                    </div>
+                </form>
+            </center>
+        </div>
+        <div id="header">
+            <div>
                 @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
+            </div>
+            <div>
                 @Html.DisplayNameFor(model => model.Feedback)
-            </th>
-            <th>
+            </div>
+            <div>
                 @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
+            </div>
+            <div>
                 @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Feedback)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-
-@section Scripts{
-<script src = "~/js/search.js"></script>
-}
+            </div>
+        </div>
+        <div>
+            @foreach (var item in Model)
+            {
+                <div class="data">
+                    <div id="name" class="overflow-auto h-100">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </div>
+                    <div id="feedback" class="overflow-auto h-100">
+                        @Html.DisplayFor(modelItem => item.Feedback)
+                    </div>
+                    <div id="rating" class="overflow-auto h-100">
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </div>
+                    <div id="date" class="overflow-auto h-100">
+                        @Html.DisplayFor(modelItem => item.Date)
+                        <div id="changers">
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

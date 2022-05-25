@@ -48,7 +48,7 @@ namespace ReviewsPart2.Controllers
                     Problem("Entity set 'ReviewsPart2Context.Review'  is null.");
         } */
 
-        
+        [HttpPost]
         public async Task<IActionResult> Search2(string query) //string name is query because of the "name" we gave is query
         {
            
