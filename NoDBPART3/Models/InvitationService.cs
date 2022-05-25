@@ -1,6 +1,6 @@
 ﻿namespace NoDBPART3.Models
 {
-    public class InvitationService
+    public class InvitationService : IInvitationService
     {
 
         public bool Invite (string from,string to,string server)
@@ -18,7 +18,9 @@
                 }
             }
             Contact newContact = new Contact(from, from, server);
-            userTo.ContactsList.Add(newContact);
+            userTo.AddContact(newContact);
+            ConversationService convService = new ConversationService();
+            Conversation conv = new Conversation(convService.nextConvId(), from, to);
             return true;
 
         }

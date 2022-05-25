@@ -87,7 +87,21 @@ function Chatscreen(props) {
             })
             console.log(valFetch.status);
             }
+
             await addMsg();
+
+        const msgTransfer = async(e) =>{
+            var valFetch = await fetch(`http://${friendChat.server}/api/Transfer/`, {
+                method: 'POST',
+                headers: {
+                'Content-Type' : 'application/json'},
+                body: JSON.stringify({from: loggedPersonUsername, to: friendChat.id ,content: newMessageText})
+            })
+            console.log(valFetch.status);
+            }
+            if (friendChat.server != "localhost:5094") {
+                await msgTransfer();
+            }
 
         const fetchFriendMsg = async () => {
             const response = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages?user='+loggedPersonUsername,{
@@ -100,14 +114,14 @@ function Chatscreen(props) {
             }
             
             //now friends contains all the contactId
-            fetchFriendMsg();
+            await fetchFriendMsg();
 
             var updateFriendContacts = []
             const updateContacts = async () => {
                 //const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
                 const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{  
                    method:'get',
-                    headers: {
+                   headers: {
                         'Content-Type' : 'application/json'},
                 })
                 const data = await response.json();
@@ -119,7 +133,7 @@ function Chatscreen(props) {
                 setFriends(updateFriendContacts); // have to be replaces by setContactsData at the end because it contains all contacts
                 setContactsData(data);
             }
-            updateContacts();
+             updateContacts();
 
         document.getElementById("chatBar").value = "";
     }

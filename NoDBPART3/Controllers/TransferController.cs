@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NoDBPART3.Models;
+using NoDBPART3.Models.Request;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,23 @@ namespace NoDBPART3.Controllers
     [ApiController]
     public class TransferController : ControllerBase
     {
-        // GET: api/<TransferController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<TransferController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<TransferController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] TransferPost transferData)
         {
-        }
+            TransferService transferService = new TransferService();
 
-        // PUT api/<TransferController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+            bool addContact = transferService.Send(transferData.from, transferData.to, transferData.content);
 
-        // DELETE api/<TransferController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (addContact)
+            {
+                //signalIR things
+                return StatusCode(201);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
