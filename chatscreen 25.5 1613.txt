@@ -71,23 +71,6 @@ function AddFriend(props) {
                 
                 addFriend();
                 ///////////////////////////////////////////
-                
-            const invitation = async(e) => {    
-                var valFetch = await fetch(`http://${friendServer}/api/Invitations`, {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type' : 'application/json'},
-                    body: JSON.stringify({from: props.loggedPersonUsername, to: friendID ,server: "localhost:5094"})
-                })
-                console.log(valFetch.status);
-                }
-                invitation();
-                ///////////////////////////////////////////
-                
-                
-                
-                
-                
                 let newFriends = [...currentContactsData];
                 let newContact = {id: friendID, name: friendNick ,server: friendServer, last: null, lastdate:null} 
                 newFriends.push(newContact)
