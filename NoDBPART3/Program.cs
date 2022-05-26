@@ -1,6 +1,6 @@
 using NoDBPART3.Models;
+
 using NoDBPART3.Hubs;
-using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,18 +10,27 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Allow All",
-        builder =>
-        {
-            builder.WithOrigins("http://localhost:3000", "http://localhost:3001").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-        });
+    //options.AddPolicy("Allow All",
+    //    builder =>
+    //    {
+    //        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    //    });
+    options.AddPolicy("ClientPermission", policy =>
+    {
+        policy.AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:3000")
+            .AllowCredentials();
+    });
 });
 
 
+
+builder.Services.AddSignalR();
 var app = builder.Build();
+
 UserDataService.initContacts();
 
 // Configure the HTTP request pipeline.
@@ -30,9 +39,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("Allow All");
+//app.UseCors("Allow All");
+
+app.UseCors("ClientPermission");
+
+app.UseRouting();
+
+app.UseHttpsRedirection();
+
 app.UseAuthorization();
+
 app.MapControllers();
-app.MapHub<ChatHub>("/hubs/ChatHub");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<ChatHub>("/Hubs/ChatHub");
+});
 
 app.Run();
