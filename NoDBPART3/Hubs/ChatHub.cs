@@ -6,7 +6,7 @@ namespace NoDBPART3.Hubs
 {
     public class ChatHub : Hub<IChatClient>
     {
-        public async Task SendMessage(ChatMessage message)
+        public async Task SendMessage(string message)
         {
             await Clients.All.ReceiveMessage(message);
         }

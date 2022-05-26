@@ -4,6 +4,6 @@ namespace NoDBPART3.Hubs.Clients
 {
     public interface IChatClient
     {
-        Task ReceiveMessage(ChatMessage message);
+        Task ReceiveMessage(string message);
     }
 }

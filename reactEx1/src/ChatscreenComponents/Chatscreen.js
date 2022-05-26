@@ -13,37 +13,74 @@ import { HttpTransportType, HubConnectionBuilder } from '@microsoft/signalr';
 function Chatscreen(props) {
     
     const [connection, setConnection] = useState(null)
+    const [counter, setCounter] = useState(0)
+    const [connected, setConnected] = useState(null)
+
+    
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+  };
 
     useEffect(() => {
         console.log("0!!!");
         const newConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:5094/Hubs/ChatHub',{
-                skipNegotiation: true,
-                transport: HttpTransportType.WebSockets})
+            .withUrl('http://localhost:5094/Hubs/ChatHub')
             .withAutomaticReconnect()
             .build();
 
         setConnection(newConnection);
     }, []);
     
-
+/*
     useEffect(() => {
         if (connection) {
-            console.log("1!!!");
-            console.log('connection: ', connection);
+            console.log("1!!!"); //delete
+            console.log('connection: ', connection); //delete
             connection.start()
-                .then(result => {
+                .then(() => {
                     console.log('Connected!');
-                    connection.on('ReceiveMessage', message => {
-//                        const updatedChat = [...latestChat.current];
-  //                      updatedChat.push(message);
-                    
-    //                    setChat(updatedChat);
+                    connection.on('', message => {
+                        console.log("received message");
+
+                        setCounter((counter) => {
+                            counter = counter + 1;
+                            return counter;
+                        })
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
+*/
+
+
+useEffect(() => {
+    (async ()=> {
+    if (connection) {
+      await start()
+        console.log('Connected!');   
+        setConnected(true)
+        connection.on('ReceiveMessage', message => {
+         
+          console.log("recieved, ", counter)
+          
+          setCounter((counter) => {
+            counter = counter + 1 // "React is awesome!"
+            
+            return counter;
+          })
+        })
+  
+       } 
+   })()
+  }, [connection]);
+
 
 
     var loggedPersonUsername = localStorage.getItem("currentUser")
@@ -169,19 +206,51 @@ function Chatscreen(props) {
                 setFriends(updateFriendContacts); // have to be replaces by setContactsData at the end because it contains all contacts
                 setContactsData(data);
             }
-             updateContacts();
-
+            await updateContacts();
+        
         document.getElementById("chatBar").value = "";
+
+        try{
+            await connection.invoke('SendMessage',"message");
+            console.log("it worked");
+        }
+        catch(e){
+            console.log(e);
+        }
     }
+
+
+    
+    const fetchFriendMsg2 = async () => {
+        const response = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages?user='+loggedPersonUsername,{
+            method:'get',
+            headers: {
+                'Content-Type' : 'application/json'},
+            })
+        const data = await response.json();
+        setFriendMsg(data);
+        }
+        
+    useEffect (() => {
+        console.log("i've fetched");
+        (async () => {
+            if (counter > 0){
+                console.log("i've fetched");
+                await fetchFriendMsg2();
+            }
+        })()
+    },[counter])
+
 
 
     const element = document.getElementById("chat-messages-list");        
     useEffect(() => {
-        handleSendMessage()
+        //handleSendMessage()
         if (element){
             element.scrollTop = element.scrollHeight
         }
     })
+    
     return (
         <div>
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
