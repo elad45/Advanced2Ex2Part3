@@ -4,40 +4,38 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Review</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div id="createbox">
+    <h1>Create review</h1>
+    <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+            <div class="field overflow-auto h-100">
+                <label asp-for="Name" class="description"></label>
+                <input asp-for="Name" class="input" placeholder="Enter your name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Feedback" class="control-label"></label>
-                <input asp-for="Feedback" class="form-control" />
+            <div class="field overflow-auto h-100">
+                <label asp-for="Feedback" class="description"></label>
+                <input asp-for="Feedback" class="input" placeholder="Enter feedback" />
                 <span asp-validation-for="Feedback" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
+            <div class="field overflow-auto h-100">
+                <label asp-for="Rating" class="description"></label>
+                <input asp-for="Rating" class="input" placeholder="Enter rating between 1-5" />
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div id="buttonWrapper">
+                <input id="button" type="submit" value="Create" class="btn btn-secondary" />
             </div>
         </form>
+        <div id="goBack">
+            <a asp-action="Index">Go back to List</a>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

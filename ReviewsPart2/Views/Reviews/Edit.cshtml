@@ -4,46 +4,44 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Review</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div id="editbox">
+    <h1>Edit review</h1>
+    <div>
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+            <div class="field overflow-auto h-100">
+                <label asp-for="Name" class="description"></label>
+                <input asp-for="Name" class="input" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Feedback" class="control-label"></label>
-                <input asp-for="Feedback" class="form-control" />
+            <div class="field overflow-auto h-100">
+                <label asp-for="Feedback" class="description"></label>
+                <input asp-for="Feedback" class="input" />
                 <span asp-validation-for="Feedback" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
+            <div class="field overflow-auto h-100">
+                <label asp-for="Rating" class="description"></label>
+                <input asp-for="Rating" class="input" />
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+            <div class="field overflow-auto h-100">
+                <label asp-for="Date" class="description"></label>
+                <input asp-for="Date" class="input" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div id="buttonWrapper">
+                <input id="button" type="submit" value="Save" class="btn btn-secondary" />
+            </div>
+            <div id="goBack">
+                <a asp-action="Index">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

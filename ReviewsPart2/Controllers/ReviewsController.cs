@@ -22,9 +22,9 @@ namespace ReviewsPart2.Controllers
         // GET: Reviews
         public async Task<IActionResult> Index()
         {
-              return _context.Review != null ? 
-                          View(await _context.Review.ToListAsync()) :
-                          Problem("Entity set 'ReviewsPart2Context.Review'  is null.");
+            return _context.Review != null ?
+                        View(await _context.Review.ToListAsync()) :
+                        Problem("Entity set 'ReviewsPart2Context.Review'  is null.");
         }
 
         public async Task<IActionResult> Search()
@@ -37,6 +37,10 @@ namespace ReviewsPart2.Controllers
         [HttpPost]
         public async Task<IActionResult> Search(string query) //string name is query because of the "name" we gave is query
         {
+            if (query == null)
+            {
+                return Redirect("/Reviews/Search");
+            }
             var q = from review in _context.Review
                     where review.Name.Contains(query) ||
                           review.Feedback.Contains(query)
@@ -48,21 +52,12 @@ namespace ReviewsPart2.Controllers
                     Problem("Entity set 'ReviewsPart2Context.Review'  is null.");
         } */
 
-        
+
         public async Task<IActionResult> Search2(string query) //string name is query because of the "name" we gave is query
         {
-           
-            if (query == null)
-            {
-                 var q = _context.Review;
-                return PartialView(await q.ToListAsync());
-            }
-            else
-            {
-                 var q = _context.Review.Where(review => review.Name.Contains(query) ||
-                                                        review.Feedback.Contains(query));
-                return PartialView(await q.ToListAsync());
-            }
+            var q = _context.Review.Where(review => review.Name.Contains(query) ||
+                                                    review.Feedback.Contains(query));
+            return PartialView(await q.ToListAsync());
         }
 
         public async Task<IActionResult> Search3(string query) //string name is query because of the "name" we gave is query
@@ -70,7 +65,7 @@ namespace ReviewsPart2.Controllers
             var q = _context.Review.Where(review => review.Name.Contains(query) ||
                                                     review.Feedback.Contains(query));
             return Json(await q.ToListAsync());
-        
+
         }
         // GET: Reviews/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -196,14 +191,14 @@ namespace ReviewsPart2.Controllers
             {
                 _context.Review.Remove(review);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ReviewExists(int id)
         {
-          return (_context.Review?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Review?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

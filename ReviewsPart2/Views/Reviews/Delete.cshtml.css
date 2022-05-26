@@ -1,0 +1,47 @@
+﻿#deletebox {
+    width: 32%;
+    background: rgb(194, 157, 145);
+    position: absolute;
+    transform: translate(+105%,+15%);
+    box-sizing: border-box;
+    border-radius: 4%;
+    padding-bottom: 1%;
+}
+
+    #deletebox h1 {
+        color: white;
+        text-align: center;
+        margin-top: 12px;
+    }
+.field {
+    padding-left: 30px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    max-height: 100px;
+    line-break:anywhere;
+
+}
+
+    .field > div {
+        display: inline-block;
+    }
+
+    .underline {
+        text-decoration: underline;
+    }
+
+#buttonWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#button {
+    width: 200px;
+}
+
+#goBack {
+    padding-top: 10px;
+    text-align: center;
+}

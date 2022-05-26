@@ -4,39 +4,26 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Review</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Feedback)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Feedback)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-    </dl>
+<div id="detailsbox">
+    <h1>Review details</h1>
+    <div>
+        <div class="field overflow-auto h-100">
+            <div class="underline">@Html.DisplayNameFor(model => model.Name):</div>&nbsp; @Html.DisplayFor(model => model.Name)
+        </div>
+        <div class="field overflow-auto h-100">
+            <div class="underline">@Html.DisplayNameFor(model => model.Feedback):</div>&nbsp; @Html.DisplayFor(model => model.Feedback)
+        </div>
+        <div class="field overflow-auto h-100">
+            <div class="underline">@Html.DisplayNameFor(model => model.Rating):</div>&nbsp; @Html.DisplayFor(model => model.Rating)
+        </div>
+        <div class="field overflow-auto h-100">
+            <div class="underline">@Html.DisplayNameFor(model => model.Date):</div>&nbsp; @Html.DisplayFor(model => model.Date)
+        </div>
+    </div>
+    <div id="features">
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>
