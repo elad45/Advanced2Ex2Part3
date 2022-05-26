@@ -6,10 +6,46 @@ import AddFriend from './AddFriend';
 import usersList from '../usersDB';
 import CurrentChat from './CurrentChat';
 import Message from '../Message';
+import { HttpTransportType, HubConnectionBuilder } from '@microsoft/signalr';
 
 //loggingUser is the User object who is logged
 
 function Chatscreen(props) {
+    
+    const [connection, setConnection] = useState(null)
+
+    useEffect(() => {
+        console.log("0!!!");
+        const newConnection = new HubConnectionBuilder()
+            .withUrl('https://localhost:5094/Hubs/ChatHub',{
+                skipNegotiation: true,
+                transport: HttpTransportType.WebSockets})
+            .withAutomaticReconnect()
+            .build();
+
+        setConnection(newConnection);
+    }, []);
+    
+
+    useEffect(() => {
+        if (connection) {
+            console.log("1!!!");
+            console.log('connection: ', connection);
+            connection.start()
+                .then(result => {
+                    console.log('Connected!');
+                    connection.on('ReceiveMessage', message => {
+//                        const updatedChat = [...latestChat.current];
+  //                      updatedChat.push(message);
+                    
+    //                    setChat(updatedChat);
+                    });
+                })
+                .catch(e => console.log('Connection failed: ', e));
+        }
+    }, [connection]);
+
+
     var loggedPersonUsername = localStorage.getItem("currentUser")
     var loggingUser = usersList.find(x => x.username == loggedPersonUsername)
     ////////////////////////////////////////////////////////////////////////////

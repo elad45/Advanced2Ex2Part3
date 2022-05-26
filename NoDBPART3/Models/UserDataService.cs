@@ -27,7 +27,7 @@
             foreach (var conversation in allConvs)
             {
                 foreach (var userId in conversation.UsersList)
-                {
+                {   
                     var user = users.Find(x=> x.Id == userId);
                     var secondUserId = conversation.UsersList.Find(x => x != userId);
                     var secondUser = users.Find(x => x.Id == secondUserId);
