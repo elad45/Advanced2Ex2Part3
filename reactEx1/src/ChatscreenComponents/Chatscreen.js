@@ -263,7 +263,7 @@ useEffect(()=> {
             headers: {
                 'Content-Type' : 'application/json'},
             })
-        if (response != 404){
+        if (response.status != 404){
         const data = await response.json();
         setFriendMsg(data);
         }
