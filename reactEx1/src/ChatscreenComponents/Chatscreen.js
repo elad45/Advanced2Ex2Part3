@@ -59,6 +59,27 @@ async function start() {
     }, [connection]);
 */
 
+
+useEffect(() => {
+    (async ()=> {
+    if (connection) {
+      await start()
+        console.log('Connected!');   
+        setConnected(true)
+        connection.on('ReceiveMessage', message => {
+        
+          console.log("recieved, ", counter)
+          //if (friendMsg.length != 0) {
+          setCounter(counter + 1);
+       // }
+        })
+  
+       } 
+   })()
+  }, [connection]);
+
+
+
     var loggedPersonUsername = localStorage.getItem("currentUser")
     var loggingUser = usersList.find(x => x.username == loggedPersonUsername)
     ////////////////////////////////////////////////////////////////////////////
@@ -120,25 +141,7 @@ async function start() {
 
     const [friendMsg, setFriendMsg] = useState([])
 
-    useEffect(() => {
-        (async ()=> {
-        if (connection) {
-          await start()
-            console.log('Connected!');   
-            setConnected(true)
-            connection.on('ReceiveMessage', message => {
-              console.log("recieved, ", counter)
-              if (friendMsg.length != 0) {
-              setCounter((counter) => {
-                counter = counter + 1             
-                return counter;
-              })
-            }
-            })
-      
-           } 
-       })()
-      }, [connection]);
+
 
     var handleSendMessage = async () => {
 
@@ -166,8 +169,20 @@ async function start() {
             })
             console.log(valFetch.status);
             }
+        const otherSideUpdate = async(e) => {    
+            var valFetch = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messagesSecondSide', {
+                method: 'POST',
+                headers: {
+                'Content-Type' : 'application/json'},
+                body: JSON.stringify({content: newMessageText, userid: loggedPersonUsername})
+            })
+            console.log(valFetch.status)
+        }
             if (friendChat.server != "localhost:5094") {
                 await msgTransfer();
+            }
+            else{
+                await otherSideUpdate();
             }
 
         const fetchFriendMsg = async () => {
@@ -227,7 +242,9 @@ async function start() {
                 'Content-Type' : 'application/json'},
             })
         const data = await response.json();
-        setFriendMsg(data);
+        if (data.status != 404){
+            setFriendMsg(data);
+        }
         }
         
     useEffect (() => {
@@ -254,7 +271,7 @@ async function start() {
         <div>
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
             <div>
-            <label id="rating" className="m-1"><a href="http://localhost:5104/">Rate us!</a> </label>
+            <label className="m-1"><a href="http://localhost:5104/">Rate us!</a> </label>
             </div>
             <div className="clearfix card chat-app" id="chat-window">
                 <div className="people-list" id="people-list">

@@ -150,7 +150,7 @@ namespace NoDBPART3.Controllers
                 return NotFound();
             }
 
-            List<MessageGet> messagesConverted = conversationService.GetMessagesConverted(id, user);
+            List<MessageGet> messagesConverted = conversationService.GetMessagesConverted(id,user);
             return Ok(messagesConverted);
         }
 
@@ -159,42 +159,47 @@ namespace NoDBPART3.Controllers
         // creates a new message between the contact and the logged user
         public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
         {
-            DateTime currentTime = DateTime.Now;
 
-            //user1 is the logged user
-            User user1 = service.Get(msg.UserId);
-            if (user1 == null)
+            //User user = service.Get(msg.UserId);
+            User user = service.Get(msg.UserId);
+            if (user == null)
             {
                 return NotFound();
             }
-            // c1 of the logged user
-            Contact c1 = user1.ContactsList.Find(x => x.Id == id);
-            if (c1 == null)
+            Contact c = user.ContactsList.Find(x => x.Id == id);
+            if (c == null)
             {
                 return NotFound();
             }
-
-            //user2 is the contact user
-            User user2 = service.Get(id);
-            if (user2 == null)
-            {
-                return NotFound();
-            }
-            // c2 is the logged user which acts ad contact for user2
-            Contact c2 = user2.ContactsList.Find(x => x.Id == msg.UserId);
-            if (c2 == null)
-            {
-                return NotFound();
-            }
-
-            c2.Last = msg.Content;
-            c2.Lastdate = currentTime;
 
             //Message newMsg = new Message(5, "notimportant", msg.Content, true);
             conversationService.AddMessage(id, msg.Content, msg.UserId);
-            c1.Last = msg.Content;
+            c.Last = msg.Content;
             //var timeAgoService = new TimeAgoService(DateTime.Now);
-            c1.Lastdate = currentTime;
+            c.Lastdate = DateTime.Now;
+            return StatusCode(201);
+        }
+
+        [HttpPost("{id}/messagesSecondSide")]
+        // creates a new message between the contact and the logged user
+        public IActionResult updateLastMsg2(string id, [FromBody] AddMessage msg)
+        {
+            User user = service.Get(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            Contact c = user.ContactsList.Find(x => x.Id == msg.UserId);
+            if (c == null)
+            {
+                return NotFound();
+            }
+
+            //Message newMsg = new Message(5, "notimportant", msg.Content, true);
+            //conversationService.AddMessage(msg.UserId, msg.Content, id);
+            c.Last = msg.Content;
+            //var timeAgoService = new TimeAgoService(DateTime.Now);
+            c.Lastdate = DateTime.Now;
             return StatusCode(201);
         }
 
@@ -235,7 +240,7 @@ namespace NoDBPART3.Controllers
             {
                 return NotFound();
             }
-            Message msgToChange = conversationService.GetMsgById(id, id2, msg.UserId);
+            Message msgToChange = conversationService.GetMsgById(id, id2,msg.UserId);
             if (msg == null)
                 return NotFound();
             msgToChange.Content = msg.Content;
@@ -244,7 +249,7 @@ namespace NoDBPART3.Controllers
 
         [HttpDelete("{id}/messages/{id2}")]
         // deletes a message of ID = {id2}, of the contact that has id = {id}
-        public IActionResult DeleteMsgById(string id, string id2, string userId)
+        public IActionResult DeleteMsgById(string id, string id2,string userId)
         {
             User user = service.Get(userId);
             if (user == null)
