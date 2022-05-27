@@ -59,7 +59,7 @@ async function start() {
     }, [connection]);
 */
 
-
+/*
 useEffect(() => {
     (async ()=> {
     if (connection) {
@@ -67,20 +67,39 @@ useEffect(() => {
         console.log('Connected!');   
         setConnected(true)
         connection.on('ReceiveMessage', message => {
-        
+            counter=counter+1;
           console.log("recieved, ", counter)
+          
           //if (friendMsg.length != 0) {
-          setCounter((counter) => {
-            counter = counter + 1             
-            return counter;
-          })
+        //  setCounter((counter) => {
+        //    counter = counter + 1             
+        //    return counter;
+        //  })
        // }
         })
   
        } 
    })()
   }, [connection]);
+*/
 
+useEffect(()=> {
+    if (connection){
+        connection.start()
+        .then(result=> {
+            console.log("connected");
+            connection.on('ReceiveMessage', message => {
+                
+              console.log("recieved, ", counter)
+              setCounter((counter) => {
+                    counter = counter + 1             
+                    return counter;
+        }
+        
+        )
+    })
+ })
+}})
 
 
     var loggedPersonUsername = localStorage.getItem("currentUser")
@@ -244,8 +263,10 @@ useEffect(() => {
             headers: {
                 'Content-Type' : 'application/json'},
             })
+        if (response != 404){
         const data = await response.json();
         setFriendMsg(data);
+        }
         }
         
     useEffect (() => {
