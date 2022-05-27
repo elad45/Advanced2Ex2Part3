@@ -67,14 +67,13 @@ useEffect(() => {
         console.log('Connected!');   
         setConnected(true)
         connection.on('ReceiveMessage', message => {
-         
           console.log("recieved, ", counter)
-          
+          if (friendMsg.length != 0) {
           setCounter((counter) => {
-            counter = counter + 1 // "React is awesome!"
-            
+            counter = counter + 1             
             return counter;
           })
+        }
         })
   
        } 
@@ -211,8 +210,13 @@ useEffect(() => {
         document.getElementById("chatBar").value = "";
 
         try{
-            await connection.invoke('SendMessage',"message");
+            console.log(friendChat.id);
+            console.log("im line 214!!!!!!!!!!!!!!!!!!")
+            if(friendMsg.length != 0 && friendMsg){
+                console.log("im line 216!!!!!!!!!!!!!!!!!!")
+                await connection.invoke('SendMessage',"message");
             console.log("it worked");
+            }
         }
         catch(e){
             console.log(e);
@@ -254,6 +258,9 @@ useEffect(() => {
     return (
         <div>
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+            <div>
+            <label className="m-1"><a href="http://localhost:5104/">Rate us!</a> </label>
+            </div>
             <div className="clearfix card chat-app" id="chat-window">
                 <div className="people-list" id="people-list">
                     <div className="chat-header" id="profileAndButton">

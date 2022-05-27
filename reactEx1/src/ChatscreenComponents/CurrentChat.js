@@ -10,7 +10,7 @@ const CurrentChat = (props) => {
     return (
         <ul className="chat-history overflow-auto h-100" id="chat-messages-list">
             {
-                props.friendMsg.map((message) => {
+                props.friendMsg && props.friendMsg.length!= 0  && props.friendMsg.map((message) => {
                         return (
                             message.sent == true ?
                                 (<li className="clearfix chat-messages">
