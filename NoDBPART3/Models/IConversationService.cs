@@ -12,13 +12,13 @@
 
         public void Delete(int id);
 
-        public List<Message> GetMessages(string user1);
+        public List<Message> GetMessages(string user1, string user2);
 
         public MessageGet GetMsgByIdConverted(string user1, string MsgId,string user);
 
-        public Message GetMsgById(string user1, string MsgId);
+        public Message GetMsgById(string user1, string MsgId,string user2);
 
-        public void DeleteMsgById(string user1, string MsgId);
+        public void DeleteMsgById(string user1, string MsgId, string user2);
 
         public int nextConvId();
         public void AddMessage(string contactId, string content, string userId);

@@ -1,4 +1,5 @@
 using NoDBPART3.Models;
+using NoDBPART3.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-
+builder.Services.AddSignalR();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -27,14 +28,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
 
-app.UseAuthorization();
 
-app.MapControllers();
 
 app.UseCors(x => x
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .SetIsOriginAllowed(origin => true) // allow any origin
                     .AllowCredentials()); // allow credentials
+
+app.UseAuthorization();
+app.MapControllers();
+app.MapHub<ChatHub>("/Hubs/ChatHub");
+
 app.Run();

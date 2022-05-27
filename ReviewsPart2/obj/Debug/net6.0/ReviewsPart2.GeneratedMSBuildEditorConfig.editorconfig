@@ -1,0 +1,64 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = ReviewsPart2
+build_property.RootNamespace = ReviewsPart2
+build_property.ProjectDir = C:\Users\Micha\OneDrive\Desktop\Advanced2\Advanced2Ex2Part3\ReviewsPart2\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Micha\OneDrive\Desktop\Advanced2\Advanced2Ex2Part3\ReviewsPart2
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Reviews/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-q4qhpoqw83
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Reviews/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-mpa5smhttt
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Reviews/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-q988d5we9b
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Reviews/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-djnsklvv72
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Reviews/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-00vmcdbi1b
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Reviews/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3c1xTZWFyY2guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-8i88qwwa04
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Reviews/Search2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3c1xTZWFyY2gyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-vqkmrxproa
+
+[C:/Users/Micha/OneDrive/Desktop/Advanced2/Advanced2Ex2Part3/ReviewsPart2/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-hla6mvwfrh

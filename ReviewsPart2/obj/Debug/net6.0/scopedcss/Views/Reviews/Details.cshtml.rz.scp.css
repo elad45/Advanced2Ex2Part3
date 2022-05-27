@@ -1,0 +1,38 @@
+#detailsbox[b-q988d5we9b] {
+    width: 32%;
+    background: rgb(194, 157, 145);
+    position: absolute;
+    transform: translate(+105%,+15%);
+    box-sizing: border-box;
+    border-radius: 4%;
+    padding-bottom: 1%;
+}
+
+    #detailsbox h1[b-q988d5we9b] {
+        color: white;
+        text-align: center;
+        margin-top: 12px;
+    }
+
+.field[b-q988d5we9b] {
+    padding-left: 30px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    max-height: 100px;
+    line-break: anywhere;
+}
+
+    .field > div[b-q988d5we9b] {
+        display: inline-block;
+    }
+
+.underline[b-q988d5we9b]{
+    text-decoration: underline;
+}
+
+#features[b-q988d5we9b] {
+    display: grid;
+    grid-template-columns: 33% 33%;
+    padding-left: 33%;
+}

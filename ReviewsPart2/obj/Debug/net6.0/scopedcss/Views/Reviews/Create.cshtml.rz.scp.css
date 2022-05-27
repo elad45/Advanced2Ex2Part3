@@ -1,0 +1,41 @@
+#createbox[b-q4qhpoqw83] {
+    width: 32%;
+    background: rgb(194, 157, 145);
+    position: absolute;
+    transform: translate(+105%,+15%);
+    box-sizing: border-box;
+    border-radius: 4%;
+    padding-bottom: 1%;
+}
+
+    #createbox h1[b-q4qhpoqw83] {
+        color: white;
+        text-align: center;
+        margin-top: 12px;
+    }
+
+.field[b-q4qhpoqw83] {
+    display: grid;
+    grid-template-columns: 20% 60%;
+    padding-bottom: 15px;
+    padding-left: 20px;
+}
+
+    .field > div[b-q4qhpoqw83] {
+        display: inline-block;
+    }
+
+#buttonWrapper[b-q4qhpoqw83] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#button[b-q4qhpoqw83] {
+    width: 200px;
+}
+
+#goBack[b-q4qhpoqw83] {
+    padding-top: 10px;
+    text-align: center;
+}

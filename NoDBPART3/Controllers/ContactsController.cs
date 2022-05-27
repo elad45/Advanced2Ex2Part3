@@ -98,7 +98,7 @@ namespace NoDBPART3.Controllers
         public IActionResult Put(string id, [FromBody] EditContactPut request)
         {
             //string userId = service.Get(request.UserId);
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(request.UserId);
             if (user == null)
             {
                 return NotFound();
@@ -116,10 +116,10 @@ namespace NoDBPART3.Controllers
         // DELETE api/<ContactsController>/5
         [HttpDelete("{id}")]
         // deletes data about contact id = {id}
-        public IActionResult Delete(string id)
+        public IActionResult Delete(string id, string userId)
         {
             //has to be changed to the user who made the request somehow
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(userId);
             if (user == null)
             {
                 return NotFound();
@@ -150,7 +150,7 @@ namespace NoDBPART3.Controllers
                 return NotFound();
             }
 
-            List<MessageGet> messagesConverted = conversationService.GetMessagesConverted(id,user);
+            List<MessageGet> messagesConverted = conversationService.GetMessagesConverted(id, user);
             return Ok(messagesConverted);
         }
 
@@ -159,24 +159,42 @@ namespace NoDBPART3.Controllers
         // creates a new message between the contact and the logged user
         public IActionResult AddMessage(string id, [FromBody] AddMessage msg)
         {
+            DateTime currentTime = DateTime.Now;
 
-            //User user = service.Get(msg.UserId);
-            User user = service.Get(msg.UserId);
-            if (user == null)
+            //user1 is the logged user
+            User user1 = service.Get(msg.UserId);
+            if (user1 == null)
             {
                 return NotFound();
             }
-            Contact c = user.ContactsList.Find(x => x.Id == id);
-            if (c == null)
+            // c1 of the logged user
+            Contact c1 = user1.ContactsList.Find(x => x.Id == id);
+            if (c1 == null)
             {
                 return NotFound();
             }
+
+            //user2 is the contact user
+            User user2 = service.Get(id);
+            if (user2 == null)
+            {
+                return NotFound();
+            }
+            // c2 is the logged user which acts ad contact for user2
+            Contact c2 = user2.ContactsList.Find(x => x.Id == msg.UserId);
+            if (c2 == null)
+            {
+                return NotFound();
+            }
+
+            c2.Last = msg.Content;
+            c2.Lastdate = currentTime;
 
             //Message newMsg = new Message(5, "notimportant", msg.Content, true);
             conversationService.AddMessage(id, msg.Content, msg.UserId);
-            c.Last = msg.Content;
+            c1.Last = msg.Content;
             //var timeAgoService = new TimeAgoService(DateTime.Now);
-            c.Lastdate = DateTime.Now;
+            c1.Lastdate = currentTime;
             return StatusCode(201);
         }
 
@@ -207,7 +225,7 @@ namespace NoDBPART3.Controllers
         // edits a message of ID = {id2}, of the contact that has id = {id}
         public IActionResult PutMsgById(string id, string id2, [FromBody] PutMsgById msg)
         {
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(msg.UserId);
             if (user == null)
             {
                 return NotFound();
@@ -217,7 +235,7 @@ namespace NoDBPART3.Controllers
             {
                 return NotFound();
             }
-            Message msgToChange = conversationService.GetMsgById(id, id2);
+            Message msgToChange = conversationService.GetMsgById(id, id2, msg.UserId);
             if (msg == null)
                 return NotFound();
             msgToChange.Content = msg.Content;
@@ -226,9 +244,9 @@ namespace NoDBPART3.Controllers
 
         [HttpDelete("{id}/messages/{id2}")]
         // deletes a message of ID = {id2}, of the contact that has id = {id}
-        public IActionResult DeleteMsgById(string id, string id2)
+        public IActionResult DeleteMsgById(string id, string id2, string userId)
         {
-            User user = service.Get(UserDataService.loggedUser);
+            User user = service.Get(userId);
             if (user == null)
             {
                 return NotFound();
@@ -238,7 +256,7 @@ namespace NoDBPART3.Controllers
             {
                 return NotFound();
             }
-            conversationService.DeleteMsgById(id, id2);
+            conversationService.DeleteMsgById(id, id2, userId);
             return StatusCode(204);
         }
         private static string TimeAgo(DateTime? time)

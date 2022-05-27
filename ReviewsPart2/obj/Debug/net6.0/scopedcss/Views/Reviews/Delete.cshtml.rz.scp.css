@@ -1,0 +1,47 @@
+#deletebox[b-mpa5smhttt] {
+    width: 32%;
+    background: rgb(194, 157, 145);
+    position: absolute;
+    transform: translate(+105%,+15%);
+    box-sizing: border-box;
+    border-radius: 4%;
+    padding-bottom: 1%;
+}
+
+    #deletebox h1[b-mpa5smhttt] {
+        color: white;
+        text-align: center;
+        margin-top: 12px;
+    }
+.field[b-mpa5smhttt] {
+    padding-left: 30px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    max-height: 100px;
+    line-break:anywhere;
+
+}
+
+    .field > div[b-mpa5smhttt] {
+        display: inline-block;
+    }
+
+    .underline[b-mpa5smhttt] {
+        text-decoration: underline;
+    }
+
+#buttonWrapper[b-mpa5smhttt] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#button[b-mpa5smhttt] {
+    width: 200px;
+}
+
+#goBack[b-mpa5smhttt] {
+    padding-top: 10px;
+    text-align: center;
+}

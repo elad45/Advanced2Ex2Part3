@@ -37,6 +37,10 @@ namespace ReviewsPart2.Controllers
         [HttpPost]
         public async Task<IActionResult> Search(string query) //string name is query because of the "name" we gave is query
         {
+            if (query == null)
+            {
+                return Redirect("/Reviews/Search");
+            }
             var q = from review in _context.Review
                     where review.Name.Contains(query) ||
                           review.Feedback.Contains(query)

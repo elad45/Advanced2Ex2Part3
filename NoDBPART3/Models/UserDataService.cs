@@ -2,7 +2,7 @@
 {
     public class UserDataService : IUserDataService
     {
-        public static string loggedUser = "bob2";
+        //public static string loggedUser = "bob2";
 
         private static List<User> users = new List<User>()
         {
@@ -27,16 +27,16 @@
             foreach (var conversation in allConvs)
             {
                 foreach (var userId in conversation.UsersList)
-                {
+                {   
                     var user = users.Find(x=> x.Id == userId);
                     var secondUserId = conversation.UsersList.Find(x => x != userId);
                     var secondUser = users.Find(x => x.Id == secondUserId);
-                     contact = new Contact(secondUser.Id, secondUser.Name, "http://localhost:7270");
+                     contact = new Contact(secondUser.Id, secondUser.Name, "localhost:5094");
                     if (!user.ContactsList.Any(contact => contact.Id == secondUser.Id))
                         user.AddContact(contact);
                     contact.Last = conversation.MessagesList.Last().Content;
                     contact.Lastdate = DateTime.Now;
-                    contact = new Contact(user.Id, user.Name, "http://localhost:7260");
+                    contact = new Contact(user.Id, user.Name, "localhost:5094");
                     if (!secondUser.ContactsList.Any(contact => contact.Id == user.Id))
                         secondUser.AddContact(contact);
                     // possibly not needed because of line 32

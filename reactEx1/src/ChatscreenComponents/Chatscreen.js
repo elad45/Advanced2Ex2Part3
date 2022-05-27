@@ -6,10 +6,59 @@ import AddFriend from './AddFriend';
 import usersList from '../usersDB';
 import CurrentChat from './CurrentChat';
 import Message from '../Message';
+import { HttpTransportType, HubConnectionBuilder } from '@microsoft/signalr';
 
 //loggingUser is the User object who is logged
 
 function Chatscreen(props) {
+    
+    const [connection, setConnection] = useState(null)
+    const [counter, setCounter] = useState(0)
+    const [connected, setConnected] = useState(null)
+
+    
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+  };
+
+    useEffect(() => {
+        console.log("0!!!");
+        const newConnection = new HubConnectionBuilder()
+            .withUrl('http://localhost:5094/Hubs/ChatHub')
+            .withAutomaticReconnect()
+            .build();
+
+        setConnection(newConnection);
+    }, []);
+    
+/*
+    useEffect(() => {
+        if (connection) {
+            console.log("1!!!"); //delete
+            console.log('connection: ', connection); //delete
+            connection.start()
+                .then(() => {
+                    console.log('Connected!');
+                    connection.on('', message => {
+                        console.log("received message");
+
+                        setCounter((counter) => {
+                            counter = counter + 1;
+                            return counter;
+                        })
+                    });
+                })
+                .catch(e => console.log('Connection failed: ', e));
+        }
+    }, [connection]);
+*/
+
     var loggedPersonUsername = localStorage.getItem("currentUser")
     var loggingUser = usersList.find(x => x.username == loggedPersonUsername)
     ////////////////////////////////////////////////////////////////////////////
@@ -71,7 +120,25 @@ function Chatscreen(props) {
 
     const [friendMsg, setFriendMsg] = useState([])
 
-
+    useEffect(() => {
+        (async ()=> {
+        if (connection) {
+          await start()
+            console.log('Connected!');   
+            setConnected(true)
+            connection.on('ReceiveMessage', message => {
+              console.log("recieved, ", counter)
+              if (friendMsg.length != 0) {
+              setCounter((counter) => {
+                counter = counter + 1             
+                return counter;
+              })
+            }
+            })
+      
+           } 
+       })()
+      }, [connection]);
 
     var handleSendMessage = async () => {
 
@@ -87,7 +154,21 @@ function Chatscreen(props) {
             })
             console.log(valFetch.status);
             }
+
             await addMsg();
+
+        const msgTransfer = async(e) =>{
+            var valFetch = await fetch(`http://${friendChat.server}/api/Transfer/`, {
+                method: 'POST',
+                headers: {
+                'Content-Type' : 'application/json'},
+                body: JSON.stringify({from: loggedPersonUsername, to: friendChat.id ,content: newMessageText})
+            })
+            console.log(valFetch.status);
+            }
+            if (friendChat.server != "localhost:5094") {
+                await msgTransfer();
+            }
 
         const fetchFriendMsg = async () => {
             const response = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages?user='+loggedPersonUsername,{
@@ -100,14 +181,14 @@ function Chatscreen(props) {
             }
             
             //now friends contains all the contactId
-            fetchFriendMsg();
+            await fetchFriendMsg();
 
             var updateFriendContacts = []
             const updateContacts = async () => {
                 //const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
                 const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{  
                    method:'get',
-                    headers: {
+                   headers: {
                         'Content-Type' : 'application/json'},
                 })
                 const data = await response.json();
@@ -119,22 +200,62 @@ function Chatscreen(props) {
                 setFriends(updateFriendContacts); // have to be replaces by setContactsData at the end because it contains all contacts
                 setContactsData(data);
             }
-            updateContacts();
-
+            await updateContacts();
+        
         document.getElementById("chatBar").value = "";
+
+        try{
+            console.log(friendChat.id);
+            console.log("im line 214!!!!!!!!!!!!!!!!!!")
+            if(friendMsg.length != 0 && friendMsg){
+                console.log("im line 216!!!!!!!!!!!!!!!!!!")
+                await connection.invoke('SendMessage',"message");
+            console.log("it worked");
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
     }
+
+
+    
+    const fetchFriendMsg2 = async () => {
+        const response = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messages?user='+loggedPersonUsername,{
+            method:'get',
+            headers: {
+                'Content-Type' : 'application/json'},
+            })
+        const data = await response.json();
+        setFriendMsg(data);
+        }
+        
+    useEffect (() => {
+        console.log("i've fetched");
+        (async () => {
+            if (counter > 0){
+                console.log("i've fetched");
+                await fetchFriendMsg2();
+            }
+        })()
+    },[counter])
+
 
 
     const element = document.getElementById("chat-messages-list");        
     useEffect(() => {
-        handleSendMessage()
+        //handleSendMessage()
         if (element){
             element.scrollTop = element.scrollHeight
         }
     })
+    
     return (
         <div>
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+            <div>
+            <label id="rating" className="m-1"><a href="http://localhost:5104/">Rate us!</a> </label>
+            </div>
             <div className="clearfix card chat-app" id="chat-window">
                 <div className="people-list" id="people-list">
                     <div className="chat-header" id="profileAndButton">

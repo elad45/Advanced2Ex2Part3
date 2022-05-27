@@ -9,21 +9,23 @@ import './AddFriend.css'
 //using setFriends
 function AddFriend(props) {
     
-    const [AllUsernames,setAllUsernames]  = useState("");
+    //const [AllUsernames,setAllUsernames]  = useState("");
     
-    const fetchusernames = async() => {
-        const response = await fetch('http://localhost:5094/api/Users/GetAllUsers',{
+    const fetchusernames = async(friendServer) => {
+        console.log(friendServer)
+        const response = await fetch(`http://${friendServer}/api/Users/GetAllUsers`,{
             method:'get',
             headers: {
                 'Content-Type' : 'application/json'},
         })
         var usernames = await response.json();
-        setAllUsernames(usernames)
+        //setAllUsernames(usernames)
         console.log(usernames)
+        return usernames;
     }
     useEffect(() =>{
-        fetchusernames();
-        console.log(AllUsernames);
+        // fetchusernames();
+        //console.log(AllUsernames);
     },[]);
     
     const [show, setShow] = useState(false);
@@ -31,10 +33,12 @@ function AddFriend(props) {
     const handleShow = () => setShow(true);
     
     
-    const handleAdd = () => {
+    const handleAdd = async () => {
         let friendID = document.getElementById("friendID").value
         let friendNick = document.getElementById("friendNick").value
         let friendServer = document.getElementById("friendServer").value
+        let AllUsernames = await fetchusernames(friendServer);
+
         let friendUser = AllUsernames.find(x => x == friendID)
         console.log(friendUser)
         console.log(props.contactsData);
@@ -67,6 +71,23 @@ function AddFriend(props) {
                 
                 addFriend();
                 ///////////////////////////////////////////
+                
+            const invitation = async(e) => {    
+                var valFetch = await fetch(`http://${friendServer}/api/Invitations`, {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type' : 'application/json'},
+                    body: JSON.stringify({from: props.loggedPersonUsername, to: friendID ,server: "localhost:5094"})
+                })
+                console.log(valFetch.status);
+                }
+                invitation();
+                ///////////////////////////////////////////
+                
+                
+                
+                
+                
                 let newFriends = [...currentContactsData];
                 let newContact = {id: friendID, name: friendNick ,server: friendServer, last: null, lastdate:null} 
                 newFriends.push(newContact)
