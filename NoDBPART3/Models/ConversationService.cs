@@ -119,6 +119,9 @@
             conv.MessagesList.Add(newMsg);
 
         }
+
+
+
         public int nextConvId()
         {
             return (conversations.Max(x => x.Id) + 1);

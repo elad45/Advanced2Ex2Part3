@@ -67,13 +67,14 @@ useEffect(() => {
         console.log('Connected!');   
         setConnected(true)
         connection.on('ReceiveMessage', message => {
+        
           console.log("recieved, ", counter)
-          if (friendMsg.length != 0) {
+          //if (friendMsg.length != 0) {
           setCounter((counter) => {
             counter = counter + 1             
             return counter;
           })
-        }
+       // }
         })
   
        } 
@@ -171,8 +172,20 @@ useEffect(() => {
             })
             console.log(valFetch.status);
             }
+        const otherSideUpdate = async(e) => {    
+            var valFetch = await fetch('http://localhost:5094/api/Contacts/'+friendChat.id+'/messagesSecondSide', {
+                method: 'POST',
+                headers: {
+                'Content-Type' : 'application/json'},
+                body: JSON.stringify({content: newMessageText, userid: loggedPersonUsername})
+            })
+            console.log(valFetch.status)
+        }
             if (friendChat.server != "localhost:5094") {
                 await msgTransfer();
+            }
+            else{
+                await otherSideUpdate();
             }
 
         const fetchFriendMsg = async () => {

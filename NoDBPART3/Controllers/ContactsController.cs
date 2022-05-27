@@ -180,6 +180,29 @@ namespace NoDBPART3.Controllers
             return StatusCode(201);
         }
 
+        [HttpPost("{id}/messagesSecondSide")]
+        // creates a new message between the contact and the logged user
+        public IActionResult updateLastMsg2(string id, [FromBody] AddMessage msg)
+        {
+            User user = service.Get(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            Contact c = user.ContactsList.Find(x => x.Id == msg.UserId);
+            if (c == null)
+            {
+                return NotFound();
+            }
+
+            //Message newMsg = new Message(5, "notimportant", msg.Content, true);
+            //conversationService.AddMessage(msg.UserId, msg.Content, id);
+            c.Last = msg.Content;
+            //var timeAgoService = new TimeAgoService(DateTime.Now);
+            c.Lastdate = DateTime.Now;
+            return StatusCode(201);
+        }
+
         [HttpGet("{id}/messages/{id2}")]
         //check if works
         //id is contactId and id2 is msgID
