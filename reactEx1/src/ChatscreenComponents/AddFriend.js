@@ -18,10 +18,12 @@ function AddFriend(props) {
             headers: {
                 'Content-Type' : 'application/json'},
         })
+        if (response.status != 404){
         var usernames = await response.json();
         //setAllUsernames(usernames)
         console.log(usernames)
         return usernames;
+        }
     }
     useEffect(() =>{
         // fetchusernames();

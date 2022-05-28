@@ -65,48 +65,7 @@ import React from 'react';
                 navigate("/chat");
             }
         }
-        //checks if username already exists in the database
-        /*if (usersList.find(x => x.username === userID)) {
-            alert("Username already exists")
-        }
-        //checks if nickname already exists in the database
-        else if (usersList.find(x => x.nickname === userNick)) {
-            alert("Nickname already exists")
-        }*/
-        //no blank password
-        /*else if (!userPassword){
-            alert("Enter a password")
-        }
-        else if (userPassword.length < 5) {
-            alert("Password length should be at least 5 characters long")
 
-        }
-        
-        else if(!userPassword.match(paswd)) {
-            alert("Password must contain at least one numeric digit and a special character(!@#$%^&*)")
-        }
-        //checks if passwords are the same
-        else if (passwordVerification !== userPassword) {
-                    alert("Password doesn't match");
-                }
-        */
-       /*
-        else {
-             var newUser = {
-                username: userID,
-                password: userPassword,
-                nickname: userNick,
-                avatar: userAvatar,
-                friends: [],
-                chats: [],
-                lastMessages: new Map()
-            }
-            usersList.push(newUser)
-            localStorage.setItem('currentUser', newUser.username)
-            navigate("/chat")
-
-        }
-        */
     }
     return (
         <div className="registerbox">
