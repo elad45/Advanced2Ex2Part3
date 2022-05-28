@@ -74,7 +74,7 @@ after you login\register it will forward you to the chatscren and on the upper-l
 
 
 
-for running the servers:
+<h1>for running the servers:</h1>
 
 on the main directory you have ReviewsPart2.sln, NoDBPART3.sln.
 ReviewsPart2.sln is the server for the reviews page and NoDBPART3.sln is the API.
