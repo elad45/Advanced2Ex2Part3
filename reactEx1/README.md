@@ -79,4 +79,8 @@ for running the servers:
 on the main directory you have ReviewsPart2.sln, NoDBPART3.sln.
 ReviewsPart2.sln is the server for the reviews page and NoDBPART3.sln is the API.
 please run both of them.
+- note: before running ReviewPart2 please open Nuget Console Manger and run the commands add-migartion and after it run-database
+
 for the react please go to reactEx1 and on the cmd type npm start.
+
+
