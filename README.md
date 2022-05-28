@@ -63,7 +63,7 @@ username, nickname, password
 - Elad, Elad56S, 12
 - Michael, Michael12S, 12345
 
-please note that the hard-coded passwords don't allign with password requirement as it just for making the login easier.
+please note that the hard-coded passwords don't allign with password requirement as it's just for making the login easier.
 
 
 besides that there are two more servers.
