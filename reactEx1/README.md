@@ -1,4 +1,3 @@
--Please note that we worked on 2 different branches. Michael uplodaed his commits to master and Elad to Elad/Elad. Elad/Elad is the default brach.
 
 <h3>Requirements:</h3>
 
@@ -7,58 +6,77 @@ After that navigate to the project directory and run at the CMD the following co
 ### `npx create-react-app project_name`
 where project_name is the project name you want to have and that's will be the name of the directory where you download the repository files as well. This command will install some react realted files.
 
-It's required to have react bootstrap files as well. please run the follwing command at the node_modules directory (you can navigate there by cd project_name cd node_modules)
+It's required to have react bootstrap, signalR files as well. please run the follwing command at the node_modules directory (you can navigate there by cd project_name cd node_modules)
 ### `npm install react-bootstrap bootstrap`
-
+### `npm i`
 after it has finished, navigate back to project_name directory run
 ### `npm install bootstrap`
 ### `npm install react-router-dom@6`
 ### `npm start`
 Open [http://localhost:3000](http://localhost:3000) to view the project in your browser.
 
-
+if you want to chat with yourself, please run npm start again on the cmd for having a different port.
 <h3>How to use the project:</h3>
 
-The project has 3 routes.
+The chat has 3 routes.
+(3000 is the default port)
 1) Login - http://localhost:3000
 2) Register - http://localhost:3000/register
 3) Chat - http://localhost:3000/chat
 
-The project holds some hard-coded users.
-each user has:
-username and password: used for login
-nickname: This is the name others identify you and used for adding contacts as well.
+The server (and only the server) holds some hard-coded users.
+each user has username and password used for login
 
 Once you login or register you will be logged to the user's chat related.
 
 Please login to the following user:
-username: Michael
-password: abcde
+username: bob2
+password: 12345
 
 This user has some hard-coded messages and contacts as required in the assignment requirements.
+to log to his hard-coded contacts you can use:
+username: alice
+password:1234
 
+or
+
+username: bob
+password: 123
 
 Some information for the Register page:
-The page asks you for username, nickname, password, avatar.
+The page asks you for username,nickname,  password.
 
-- Username, nickname: Must be unique. In case you enter a username or nickname that's already in the system it will not let you use this names and ask you to change. (Be advised that there are some hard-coded users in the system which appear at the bottom of the README)
+- Username  Must be unique. In case you enter a username that's already in the system it will not let you use this name and ask you to change. (Be advised that there are some hard-coded users in the server which appears at the bottom of the README)
+
+- nickname is the name you'll see yourself in the chat screen
 
 - Password: must contain at least 5 characters with at least one digit and one special character     (!@#$%^&*)
+  for example "12345!" is a good password
 
-- Avatar: you can upload an avatar image from your computer. In case you don't upload any avatar it will use a default avatar.
 
 
-Hard coded users, some of them also have friends in contact list. all users are in usersDB.js (password doesn't follow the registeration password requirements for making it easier to login).
+The server's hard coded users are listed by: 
+username, nickname, password
+- bob2, Bobby2S, 12345 (Main user who has hard-coded chats followed by assignement requirements)
+- alice, AliciaS, 1234 (bob2 has her as a contact)
+- bob, BobbyS, 123 (bob2 has him as a contact)
+- Elad, Elad56S, 12
+- Michael, Michael12S, 12345
 
-The users are listed by:
-username, password, nickname
-- Michael, abcde, Michael12 (Main user who has hard-coded chats followed by assignement requirements)
-- Boaz, 12345, Boaz34
-- Moshe, abc, Moshe45
-- Elad, 12, Elad56
-- Yossi, 11, Yossi90
-- Yaakov, 125, Yaakov91
-- 11, 125, 11
-- 22, 125, 22
-- 33, 125, 33
-- 44, 125, 44
+please note that the hard-coded passwords don't allign with password requirement as it just for making the login easier.
+
+
+besides that there are two more servers.
+one is the server that holds the API on localhost:5094
+and the other one is the server for the reviews page on localhost:5104.
+
+after you login\register it will forward you to the chatscren and on the upper-left side you'll see a link to the reviews page.
+
+
+
+for running the servers:
+
+on the main directory you have ReviewsPart2.sln, NoDBPART3.sln.
+ReviewsPart2.sln is the server for the reviews page and NoDBPART3.sln is the API.
+please run both of them.
+for the react please go to reactEx1 and on the cmd type npm start.
