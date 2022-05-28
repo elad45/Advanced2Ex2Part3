@@ -37,47 +37,26 @@ async function start() {
         setConnection(newConnection);
     }, []);
     
-/*
-    useEffect(() => {
-        if (connection) {
-            console.log("1!!!"); //delete
-            console.log('connection: ', connection); //delete
-            connection.start()
-                .then(() => {
-                    console.log('Connected!');
-                    connection.on('', message => {
-                        console.log("received message");
 
-                        setCounter((counter) => {
-                            counter = counter + 1;
-                            return counter;
-                        })
-                    });
-                })
-                .catch(e => console.log('Connection failed: ', e));
+useEffect(()=> {
+    if (connection){
+        connection.start()
+        //after the connection starts, keep on
+        .then(result=> {
+            console.log("connected");
+            // this part happens to the other other part
+            connection.on('ReceiveMessage', message => {
+                
+              console.log("recieved, ", counter)
+              setCounter((counter) => {
+                    counter = counter + 1             
+                    return counter;
         }
-    }, [connection]);
-*/
-
-
-useEffect(() => {
-    (async ()=> {
-    if (connection) {
-      await start()
-        console.log('Connected!');   
-        setConnected(true)
-        connection.on('ReceiveMessage', message => {
         
-          console.log("recieved, ", counter)
-          //if (friendMsg.length != 0) {
-          setCounter(counter + 1);
-       // }
-        })
-  
-       } 
-   })()
-  }, [connection]);
-
+        )
+    })
+ })
+}}, [connection])
 
 
     var loggedPersonUsername = localStorage.getItem("currentUser")
@@ -241,9 +220,9 @@ useEffect(() => {
             headers: {
                 'Content-Type' : 'application/json'},
             })
+        if (response.status != 404){
         const data = await response.json();
-        if (data.status != 404){
-            setFriendMsg(data);
+        setFriendMsg(data);
         }
         }
         
