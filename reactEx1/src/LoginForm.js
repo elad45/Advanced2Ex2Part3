@@ -32,29 +32,6 @@ function LoginForm() {
             localStorage.setItem('currentUser', loggingID);
             navigate("/chat");
         }
-            /*
-        
-        var c = await fetch('http://localhost:5094/api/Contacts/', {
-        method: 'POST',
-        headers: {    
-            'Content-Type': 'application/json'},
-        body: JSON.stringify({ id: loggingID, name: loggingPassword, server: "localhost:1000", user:"bob2" })
-        })
-        
-        var b = await fetch('http://localhost:5094/api/Contacts/')
-        */
-       /*
-        var loggingUser = usersList.find(x => x.username === loggingID);
-        if (!loggingUser)
-            alert("No such username");
-        else if ((loggingUser) && loggingUser.password === loggingPassword) {
-            localStorage.setItem('currentUser', loggingUser.username)
-        navigate("/chat");
-        }
-        else {
-            alert("Wrong password");
-        }
-        */
     }
 
     return (

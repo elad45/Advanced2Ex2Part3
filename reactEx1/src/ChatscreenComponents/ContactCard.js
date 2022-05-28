@@ -13,8 +13,10 @@ const ContactCard = (props) => {
                 headers: {
                     'Content-Type' : 'application/json'},
                 })
+                if (response.status != 404){
             const data = await response.json();
             props.setFriendMsg(data);
+                }
             }
             fetchCurrentMessages();
     }

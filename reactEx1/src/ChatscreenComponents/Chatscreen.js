@@ -56,7 +56,8 @@ useEffect(()=> {
         )
     })
  })
-}}, [connection])
+}
+}, [connection])
 
 
     var loggedPersonUsername = localStorage.getItem("currentUser")
@@ -71,8 +72,10 @@ useEffect(()=> {
             headers: {
                 'Content-Type' : 'application/json'},
         })
+        if (response.status != 404){
         var loggedPersonNickname = await response.text();
         setUserNickname(loggedPersonNickname)
+        }
     }
     useEffect(() =>{
         fetchNickname();
@@ -98,6 +101,7 @@ useEffect(()=> {
             headers: {
                 'Content-Type' : 'application/json'},
         })
+        if (response.status != 404){
         const data = await response.json();
         
         for (var i=0; i< data.length; i++) {
@@ -107,6 +111,7 @@ useEffect(()=> {
         setFriends(friendContacts); // have to be replaces by setContactsData at the end because it contains all contacts
         setContactsData(data);
     }
+}
     
     //now friends contains all the contactId
     useEffect(() =>{
@@ -123,7 +128,6 @@ useEffect(()=> {
 
 
     var handleSendMessage = async () => {
-
         var newMessageText = document.getElementById("chatBar").value
         // blank message
         if (newMessageText == "") { return }
@@ -135,10 +139,8 @@ useEffect(()=> {
                 body: JSON.stringify({content: newMessageText, userid: loggedPersonUsername})
             })
             console.log(valFetch.status);
-            }
-
+            }         
             await addMsg();
-
         const msgTransfer = async(e) =>{
             var valFetch = await fetch(`http://${friendChat.server}/api/Transfer/`, {
                 method: 'POST',
@@ -170,8 +172,10 @@ useEffect(()=> {
                 headers: {
                     'Content-Type' : 'application/json'},
                 })
+                if (response.status != 404){
             const data = await response.json();
             setFriendMsg(data);
+                }
             }
             
             //now friends contains all the contactId
@@ -185,14 +189,17 @@ useEffect(()=> {
                    headers: {
                         'Content-Type' : 'application/json'},
                 })
+                if (response.status != 404){
                 const data = await response.json();
                 
                 for (var i=0; i< data.length; i++) {
                     updateFriendContacts.push(data[i].name)
                     //friendContacts.push(data[i].id) ------ it should be back to this one!
                 }
+                
                 setFriends(updateFriendContacts); // have to be replaces by setContactsData at the end because it contains all contacts
                 setContactsData(data);
+            }
             }
             await updateContacts();
         
@@ -227,12 +234,29 @@ useEffect(()=> {
         }
         
     useEffect (() => {
+        var updateFriendContacts = []
+        const updateContacts = async () => {
+            //const response = await fetch('http://localhost:5094/api/Contacts?user='+loggedPersonUsername,{
+            const response = await fetch('http://localhost:5094/api/Contacts/allContacts?user='+loggedPersonUsername,{  
+               method:'get',
+               headers: {
+                    'Content-Type' : 'application/json'},
+            })
+            if (response.status != 404){
+            const data = await response.json();
+            
+            for (var i=0; i< data.length; i++) {
+                updateFriendContacts.push(data[i].name)
+                //friendContacts.push(data[i].id) ------ it should be back to this one!
+            }
+            setFriends(updateFriendContacts); // have to be replaces by setContactsData at the end because it contains all contacts
+            setContactsData(data);
+        }
+        }
         console.log("i've fetched");
         (async () => {
-            if (counter > 0){
-                console.log("i've fetched");
+                await updateContacts();
                 await fetchFriendMsg2();
-            }
         })()
     },[counter])
 
