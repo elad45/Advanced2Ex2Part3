@@ -14,18 +14,8 @@ function Chatscreen(props) {
     
     const [connection, setConnection] = useState(null)
     const [counter, setCounter] = useState(0)
-    const [connected, setConnected] = useState(null)
-
     
-async function start() {
-    try {
-        await connection.start();
-        console.log("SignalR Connected.");
-    } catch (err) {
-        console.log(err);
-        setTimeout(start, 5000);
-    }
-  };
+    
 
     useEffect(() => {
         console.log("0!!!");
@@ -41,8 +31,10 @@ async function start() {
 useEffect(()=> {
     if (connection){
         connection.start()
+        //after the connection starts, keep on
         .then(result=> {
             console.log("connected");
+            // this part happens to the other other part
             connection.on('ReceiveMessage', message => {
                 
               console.log("recieved, ", counter)
@@ -54,7 +46,7 @@ useEffect(()=> {
         )
     })
  })
-}},[connection])
+}}, [connection])
 
 
     var loggedPersonUsername = localStorage.getItem("currentUser")

@@ -7,8 +7,10 @@
         {
             UserDataService service = new UserDataService();
             User userTo = service.GetAll().Find(user => user.Id == to);
+            if (userTo == null)
+                return false;
             Contact contactFrom = userTo.ContactsList.Find(c => c.Id == from); 
-            if (userTo != null && contactFrom != null)
+            if (contactFrom != null)
             {
                 ConversationService conversationService = new ConversationService();
                 conversationService.AddMessage(from, content, to);
